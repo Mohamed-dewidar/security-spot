@@ -1,0 +1,41 @@
+---
+description: Backend conventions for the bundle builder
+globs: server/**/*
+alwaysApply: false
+---
+
+# Server (BE) Conventions
+
+See `AGENTS.md` for full spec. **No JSON Server** — Express + SQLite only.
+
+## Stack
+
+Express + TypeScript + SQLite (better-sqlite3 or similar).
+
+## API contract
+
+Implement exact routes from `AGENTS.md`. Response shapes must match `server/src/types/`.
+
+## Data
+
+- Catalog in SQLite, seeded from `server/data/bundle.json`
+- Configurations + configuration_items for shopper state
+- Orders table for checkout drafts
+
+## Pricing
+
+- `calculateQuote(catalog, configuration)` in `server/src/lib/pricing/`
+- Mirror logic from `client/src/lib/pricing.ts` (or share via path alias)
+- Resolve prices from DB only — ignore client-sent prices
+
+## Routes
+
+- `GET /config` — assemble nested BundleConfig from DB
+- `PATCH /configurations/:id` — validate body with Zod
+- `POST .../quote` — compute Quote
+- `POST .../checkout` — quote first, then persist order draft
+
+## Dev
+
+- Port 3001; client proxies `/api` via Vite
+- Same port/URLs so FE needs zero changes when switching from local.ts

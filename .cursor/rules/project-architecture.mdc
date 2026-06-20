@@ -1,0 +1,37 @@
+---
+description: Bundle Builder — FE/BE architecture, API contract, and phase plan
+alwaysApply: true
+---
+
+# Bundle Builder Architecture
+
+EcomExperts take-home. Full context: `AGENTS.md` at repo root.
+
+## Repo
+
+- `client/` — React + TS + Tailwind
+- `server/` — Express + TS + SQLite (**no JSON Server mock**)
+
+## Phase
+
+FE first via `api/client.ts` + `local.ts`. BE later — flip `VITE_USE_API=true`. Will not break FE if contract holds.
+
+## Rules
+
+- Components **never** import `bundle.json` — only `api.*`
+- Catalog read-only; selections in reducer; totals derived
+- localStorage required for "Save my system for later"
+- Optimistic UI + debounced PATCH when API enabled
+- Server authoritative at quote/checkout; never trust client prices
+
+## Variant qty (critical)
+
+Separate qty per `productId:variantId`. Card stepper = active variant. Review shows all variants with qty > 0.
+
+## API (fixed)
+
+`GET /api/v1/config` · `POST/PATCH/GET /api/v1/configurations/:id` · `POST .../save` · `POST .../quote` · `POST .../checkout`
+
+## Figma
+
+Desktop `1:342` · Tablet `1:27` · Mobile `1:658`

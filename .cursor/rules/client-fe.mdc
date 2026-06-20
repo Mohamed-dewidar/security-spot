@@ -1,0 +1,46 @@
+---
+description: Frontend conventions for the bundle builder
+globs: client/**/*
+alwaysApply: false
+---
+
+# Client (FE) Conventions
+
+See `AGENTS.md` for full spec.
+
+## Stack
+
+React + TypeScript + Tailwind + Vite.
+
+## Data access
+
+- Single entry: `client/src/api/client.ts`
+- Phase 1: `implementations/local.ts` (`VITE_USE_API=false`)
+- Phase 2: `implementations/http.ts` (`VITE_USE_API=true`)
+- Never `import bundle.json` in components
+
+## State
+
+- `bundleReducer` + Context for selections, activeVariants, openStepId
+- Selectors for review lines, totals, step "N selected"
+- Do not store computed totals in state
+
+## UI patterns
+
+- 4-step accordion; step 1 open on load
+- Product cards: data-driven from catalog (badge, variants, stepper optional per product)
+- `QuantityStepper` shared between card and review panel — must stay in sync
+- Review panel grouped: Cameras, Sensors, Accessories, Plan
+
+## Sync
+
+- Optimistic dispatch first, then debounced `api.patchConfiguration` (~400ms)
+- localStorage on "Save my system for later" (required by brief)
+
+## Responsive
+
+Match Figma frames independently: desktop `1:342`, tablet `1:27`, mobile `1:658`.
+
+## Components
+
+Keep presentational components dumb. Business logic in reducer, selectors, `lib/pricing.ts`.
