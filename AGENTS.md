@@ -27,7 +27,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 ## Current phase (update as you progress)
 
 - [x] `client/` scaffolded (Vite + React + TS)
-- [ ] Tailwind configured
+- [x] Tailwind configured
 - [ ] Shared types + `bundle.json` catalog seed
 - [ ] `client/src/api/client.ts` + `implementations/local.ts`
 - [ ] Reducer + selectors (variant qty logic)

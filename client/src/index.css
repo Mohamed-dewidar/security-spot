@@ -1,111 +1,165 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+/* ── Gilroy ── */
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/gilroy/Gilroy-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/gilroy/Gilroy-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/gilroy/Gilroy-Medium.woff2") format("woff2");
   font-weight: 500;
-  color: var(--text-h);
+  font-style: normal;
+  font-display: swap;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/gilroy/Gilroy-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/gilroy/Gilroy-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── TT Norms Pro (Checkout) ── */
+@font-face {
+  font-family: "TT Norms Pro";
+  src: url("./assets/fonts/tt-norms-pro/TTNormsPro-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Colors: brand */
+  --color-brand: #4e2fd2;
+  --color-brand-border: rgb(78 47 210 / 0.7);
+  --color-on-brand: #ffffff;
+
+  /* Colors: gray scale (Figma Gray-C) */
+  --color-obsidian: #0b0d10;
+  --color-gray-700: #525963;
+  --color-gray-600: #6f7882;
+  --color-gray-500: #a8b2bd;
+  --color-gray-400: #ced6de;
+  --color-gray-300: #e6ebf0;
+  --color-gray-200: #f0f4f7;
+  --color-gray-70: #575757;
+
+  /* Colors: semantic */
+  --color-surface: #ffffff;
+  --color-step-bg: #edf4ff;
+  --color-text: #1f1f1f;
+  --color-text-muted: #484848;
+  --color-text-body: rgb(31 31 31 / 0.75);
+  --color-sale: #d8392b;
+  --color-success: #0aa288;
+  --color-success-bg: rgb(29 240 187 / 0.04);
+  --color-link: #0000ee;
+  --color-chip-border: #cccccc;
+  --color-accordion-border: #1f1f1f;
+  --color-stepper-disabled: #f1f1f2;
+
+  /* Typography */
+  --font-sans: "Gilroy", system-ui, sans-serif;
+  --font-button: "TT Norms Pro", "Gilroy", system-ui, sans-serif;
+
+  --text-2xs: 0.625rem; /* 10px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-md: 1.0625rem; /* 17px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.375rem; /* 22px */
+  --text-3xl: 1.75rem; /* 28px */
+
+  --tracking-step-label: 0.1rem; /* 1.6px */
+  --tracking-body: 0.0375rem; /* 0.6px */
+  --tracking-section: 0.0225rem; /* 0.36px */
+  --tracking-tight-sm: -0.05rem; /* -0.8px */
+  --tracking-tight: -0.0025rem; /* -0.04px */
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-body: 1.3;
+  --leading-ui: 1rem; /* 16px */
+  --leading-stepper: 1.25rem; /* 20px */
+  --leading-total: 2rem; /* 32px */
+
+  /* Spacing (Figma-recurring) */
+  --spacing-3: 0.1875rem; /* 3px */
+  --spacing-4: 0.25rem; /* 4px */
+  --spacing-5: 0.3125rem; /* 5px */
+  --spacing-6: 0.375rem; /* 6px */
+  --spacing-8: 0.5rem; /* 8px */
+  --spacing-10: 0.625rem; /* 10px */
+  --spacing-11: 0.6875rem; /* 11px */
+  --spacing-12: 0.75rem; /* 12px */
+  --spacing-13: 0.8125rem; /* 13px */
+  --spacing-15: 0.9375rem; /* 15px */
+  --spacing-16: 1rem; /* 16px */
+  --spacing-19: 1.1875rem; /* 19px */
+  --spacing-20: 1.25rem; /* 20px */
+  --spacing-24: 1.5rem; /* 24px */
+  --spacing-25: 1.5625rem; /* 25px */
+
+  /* Radius */
+  --radius-chip: 2px;
+  --radius-badge-sm: 3px;
+  --radius-control: 4px;
+  --radius-image: 5px;
+  --radius-button: 7px;
+  --radius-card: 10px;
+
+  /* Borders */
+  --border-width-hairline: 0.5px;
+
+  /* Breakpoints: md = tablet (1:27), lg+ = desktop (1:342) */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    color: var(--color-obsidian);
+    background-color: var(--color-surface);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
-p {
-  margin: 0;
-}
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  #root {
+    min-height: 100svh;
+  }
 }
