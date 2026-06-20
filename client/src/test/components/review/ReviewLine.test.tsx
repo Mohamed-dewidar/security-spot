@@ -36,7 +36,9 @@ describe("ReviewLine", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Increase quantity" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Increase Wyze Cam v4 quantity" }),
+    );
 
     expect(onQuantityChange).toHaveBeenCalledWith(2);
   });

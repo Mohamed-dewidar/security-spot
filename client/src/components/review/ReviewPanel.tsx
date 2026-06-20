@@ -57,7 +57,26 @@ export function ReviewPanel() {
   const dispatch = useBundleDispatch();
   const { saveForLater } = useBundle();
   const [isSaving, setIsSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [savedSnapshotKey, setSavedSnapshotKey] = useState<string | null>(null);
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
+  const [saveErrorState, setSaveErrorState] = useState<{
+    snapshotKey: string;
+    message: string;
+  } | null>(null);
+
+  const snapshotKey = useMemo(
+    () =>
+      JSON.stringify({
+        selections: state.selections,
+        activeVariants: state.activeVariants,
+        openStepId: state.openStepId,
+      }),
+    [state.activeVariants, state.openStepId, state.selections],
+  );
+
+  const saved = savedSnapshotKey === snapshotKey;
+  const saveError =
+    saveErrorState?.snapshotKey === snapshotKey ? saveErrorState.message : null;
 
   const groupedLines = useMemo(
     () => selectReviewLinesByGroup(catalog, state),
@@ -91,7 +110,6 @@ export function ReviewPanel() {
     (lineKey: string, quantity: number) => {
       const { productId, variantId } = parseSelectionKey(lineKey);
       dispatch({ type: "SET_QUANTITY", productId, variantId, quantity });
-      setSaved(false);
     },
     [dispatch],
   );
@@ -102,13 +120,25 @@ export function ReviewPanel() {
 
   const handleSaveForLater = useCallback(async () => {
     setIsSaving(true);
+    setSaveErrorState(null);
     try {
       await saveForLater();
-      setSaved(true);
+      setSavedSnapshotKey(snapshotKey);
+      setSaveFeedback("Your system was saved for later.");
+    } catch (error) {
+      setSavedSnapshotKey(null);
+      setSaveFeedback(null);
+      setSaveErrorState({
+        snapshotKey,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Could not save your system right now. Please try again.",
+      });
     } finally {
       setIsSaving(false);
     }
-  }, [saveForLater]);
+  }, [saveForLater, snapshotKey]);
 
   return (
     <section className="rounded-card border border-gray-400 bg-surface p-15 md:p-20 lg:p-25">
@@ -139,6 +169,8 @@ export function ReviewPanel() {
         onSaveForLater={() => void handleSaveForLater()}
         isSaving={isSaving}
         saved={saved}
+        saveStatusMessage={saved ? saveFeedback : null}
+        saveErrorMessage={saveError}
       />
     </section>
   );

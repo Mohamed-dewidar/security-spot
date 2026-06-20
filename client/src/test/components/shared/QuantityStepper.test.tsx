@@ -12,28 +12,54 @@ describe("QuantityStepper", () => {
   it("increments and decrements within bounds", () => {
     const onChange = vi.fn();
 
-    render(<QuantityStepper value={1} min={0} max={3} onChange={onChange} />);
+    render(
+      <QuantityStepper
+        value={1}
+        min={0}
+        max={3}
+        onChange={onChange}
+        ariaLabel="camera quantity"
+      />,
+    );
 
-    fireEvent.click(screen.getByRole("button", { name: "Increase quantity" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Increase camera quantity" }),
+    );
     expect(onChange).toHaveBeenCalledWith(2);
 
-    fireEvent.click(screen.getByRole("button", { name: "Decrease quantity" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Decrease camera quantity" }),
+    );
     expect(onChange).toHaveBeenCalledWith(0);
   });
 
   it("disables controls at min and max", () => {
     const { rerender } = render(
-      <QuantityStepper value={0} min={0} max={5} onChange={() => {}} />,
+      <QuantityStepper
+        value={0}
+        min={0}
+        max={5}
+        onChange={() => {}}
+        ariaLabel="camera quantity"
+      />,
     );
 
     expect(
-      screen.getByRole("button", { name: "Decrease quantity" }),
+      screen.getByRole("button", { name: "Decrease camera quantity" }),
     ).toBeDisabled();
 
-    rerender(<QuantityStepper value={5} min={0} max={5} onChange={() => {}} />);
+    rerender(
+      <QuantityStepper
+        value={5}
+        min={0}
+        max={5}
+        onChange={() => {}}
+        ariaLabel="camera quantity"
+      />,
+    );
 
     expect(
-      screen.getByRole("button", { name: "Increase quantity" }),
+      screen.getByRole("button", { name: "Increase camera quantity" }),
     ).toBeDisabled();
   });
 
@@ -41,7 +67,7 @@ describe("QuantityStepper", () => {
     render(<QuantityStepper value={1} onChange={() => {}} />);
 
     expect(
-      screen.getByRole("button", { name: "Increase quantity" }),
+      screen.getByRole("button", { name: "Increase Quantity" }),
     ).toHaveClass("min-h-11", "min-w-11");
   });
 });

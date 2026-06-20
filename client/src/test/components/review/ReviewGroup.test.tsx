@@ -54,7 +54,9 @@ describe("ReviewGroup", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Increase quantity" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Increase Wyze Cam v4 quantity" }),
+    );
 
     expect(onQuantityChange).toHaveBeenCalledWith("wyze-cam-v4:white", 2);
   });

@@ -63,7 +63,7 @@ describe("ReviewPanel", () => {
 
     fireEvent.click(
       line.querySelector(
-        '[aria-label="Increase quantity"]',
+        '[aria-label="Increase Wyze Cam v4 — White quantity"]',
       ) as HTMLButtonElement,
     );
 
@@ -90,6 +90,9 @@ describe("ReviewPanel", () => {
     });
     expect(
       screen.getByRole("button", { name: "Saved for later" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Your system was saved for later."),
     ).toBeInTheDocument();
   });
 

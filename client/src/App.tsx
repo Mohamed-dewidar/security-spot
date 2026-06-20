@@ -18,6 +18,7 @@ function App() {
   const [status, setStatus] = useState<BootStatus>("loading");
   const [bootData, setBootData] = useState<BootData | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,12 +44,16 @@ function App() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [retryKey]);
 
   if (status === "loading") {
     return (
-      <div className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface px-15 font-sans">
-        <p className="text-sm font-medium text-text-body">
+      <div
+        aria-busy="true"
+        aria-live="polite"
+        className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface px-15 font-sans"
+      >
+        <p role="status" className="text-sm font-medium text-text-body">
           Loading your security system…
         </p>
       </div>
@@ -58,9 +63,27 @@ function App() {
   if (status === "error" || !bootData) {
     return (
       <div className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface px-15 font-sans">
-        <p role="alert" className="text-sm font-medium text-red-600">
-          {errorMessage ?? "Something went wrong. Please refresh the page."}
-        </p>
+        <div className="w-full max-w-md rounded-card border border-gray-400 bg-white p-20 text-center shadow-sm md:p-24">
+          <p
+            role="alert"
+            className="text-sm font-medium text-red-600 md:text-base"
+          >
+            {errorMessage ??
+              "Something went wrong while loading the bundle builder."}
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setBootData(null);
+              setErrorMessage(null);
+              setStatus("loading");
+              setRetryKey((current) => current + 1);
+            }}
+            className="mt-16 inline-flex min-h-11 items-center justify-center rounded-button bg-brand px-20 py-12 font-button text-base font-bold leading-ui text-on-brand transition-opacity hover:opacity-90 active:opacity-80 md:min-h-12"
+          >
+            Try again
+          </button>
+        </div>
       </div>
     );
   }

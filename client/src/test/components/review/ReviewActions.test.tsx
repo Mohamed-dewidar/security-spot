@@ -43,11 +43,33 @@ describe("ReviewActions", () => {
     expect(screen.getByRole("button", { name: "Saving…" })).toBeInTheDocument();
 
     rerender(
-      <ReviewActions onCheckout={() => {}} onSaveForLater={() => {}} saved />,
+      <ReviewActions
+        onCheckout={() => {}}
+        onSaveForLater={() => {}}
+        saved
+        saveStatusMessage="Your system was saved for later."
+      />,
     );
 
     expect(
       screen.getByRole("button", { name: "Saved for later" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByText("Your system was saved for later."),
+    ).toBeInTheDocument();
+  });
+
+  it("renders save errors in an alert region", () => {
+    render(
+      <ReviewActions
+        onCheckout={() => {}}
+        onSaveForLater={() => {}}
+        saveErrorMessage="Could not save right now."
+      />,
+    );
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Could not save right now.",
+    );
   });
 });

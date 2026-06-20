@@ -43,7 +43,7 @@ export function QuantityStepper({
       <button
         type="button"
         className={`${buttonClassName} rounded-l-control border-r border-gray-400`}
-        aria-label="Decrease quantity"
+        aria-label={`Decrease ${ariaLabel}`}
         disabled={disabled || atMin}
         onClick={decrement}
       >
@@ -51,6 +51,7 @@ export function QuantityStepper({
       </button>
       <span
         aria-live="polite"
+        aria-atomic="true"
         className="flex min-w-11 items-center justify-center border-r border-gray-400 px-8 text-base font-medium leading-stepper text-text tabular-nums md:min-w-9 md:px-6 md:text-sm"
       >
         {value}
@@ -58,7 +59,7 @@ export function QuantityStepper({
       <button
         type="button"
         className={`${buttonClassName} rounded-r-control`}
-        aria-label="Increase quantity"
+        aria-label={`Increase ${ariaLabel}`}
         disabled={disabled || atMax}
         onClick={increment}
       >
