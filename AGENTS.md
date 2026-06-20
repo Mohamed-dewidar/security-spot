@@ -30,7 +30,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] Tailwind configured
 - [x] Shared types + `bundle.json` catalog seed
 - [x] `client/src/api/client.ts` + `implementations/local.ts`
-- [ ] Reducer + selectors (variant qty logic)
+- [x] Reducer + selectors (variant qty logic)
 - [ ] Optimistic UI + debounced sync queue
 - [ ] Builder UI (accordion, product cards, variants, steppers)
 - [ ] Review panel (grouped lines, synced steppers, totals)
