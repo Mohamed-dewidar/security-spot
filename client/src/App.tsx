@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BuilderPanel } from "@/components/builder/BuilderPanel";
 import { BundleLayout } from "@/components/layout/BundleLayout";
+import { ReviewPanel } from "@/components/review/ReviewPanel";
 import { BundleProvider } from "@/state/bundleContext";
 import { bootBundleConfiguration } from "@/state/bootBundle";
 import type { BundleConfig } from "@/types/catalog";
@@ -69,22 +70,7 @@ function App() {
       catalog={bootData.catalog}
       configuration={bootData.configuration}
     >
-      <BundleLayout
-        builder={<BuilderPanel />}
-        review={
-          <section
-            aria-label="Your security system"
-            className="rounded-card border border-gray-400 p-15"
-          >
-            <h2 className="text-lg font-semibold text-obsidian">
-              Your security system
-            </h2>
-            <p className="mt-8 text-sm font-medium text-text-body">
-              Review panel — Phase 7
-            </p>
-          </section>
-        }
-      />
+      <BundleLayout builder={<BuilderPanel />} review={<ReviewPanel />} />
     </BundleProvider>
   );
 }

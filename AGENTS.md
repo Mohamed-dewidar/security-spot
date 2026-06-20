@@ -33,7 +33,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] Reducer + selectors (variant qty logic)
 - [x] Optimistic UI + debounced sync queue
 - [x] Builder UI (accordion, product cards, variants, steppers)
-- [ ] Review panel (grouped lines, synced steppers, totals)
+- [x] Review panel (grouped lines, synced steppers, totals)
 - [x] localStorage save/restore ("Save my system for later")
 - [ ] Responsive (tablet → mobile)
 - [ ] `server/` Express + TS + SQLite
