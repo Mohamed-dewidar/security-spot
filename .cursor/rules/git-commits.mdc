@@ -1,0 +1,81 @@
+---
+description: Commit message format (Conventional Commits)
+alwaysApply: true
+---
+
+# Commit message format
+
+Every commit MUST use:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+```
+
+## Subject line
+
+- Format: `<type>(<scope>): <subject>`
+- Imperative mood ("add", not "added")
+- Lowercase subject (after the colon)
+- No trailing period
+- Max ~72 characters for the subject line
+
+## Body
+
+- Required for non-trivial changes (always include for feat, fix, refactor)
+- Blank line between subject and body
+- Explain **why**, not a file list
+- Wrap at ~72 characters
+
+## Types
+
+| Type       | Use for                              |
+| ---------- | ------------------------------------ |
+| `feat`     | New feature or user-visible behavior |
+| `fix`      | Bug fix                              |
+| `docs`     | Documentation only                   |
+| `style`    | Formatting, no logic change          |
+| `refactor` | Code change, no feature/fix          |
+| `test`     | Tests only                           |
+| `chore`    | Tooling, deps, config                |
+
+## Scopes
+
+| Scope    | Use for                                  |
+| -------- | ---------------------------------------- |
+| `client` | React app (`client/`)                    |
+| `server` | Express API (`server/`)                  |
+| `docs`   | AGENTS.md, README, docs/, COMPONENTS.md  |
+| `repo`   | Root config, cursor rules, cross-cutting |
+
+Omit scope only for truly repo-wide changes: `chore: ...`
+
+## Examples
+
+```
+docs(docs): add frontend plan and component reference
+
+Document implementation phases and component tree so agents and
+contributors can continue work without re-deriving architecture.
+```
+
+```
+feat(client): add bundle reducer with variant quantity keys
+
+Selections keyed by productId:variantId so card and review steppers
+stay in sync per the take-home spec.
+```
+
+```
+fix(client): show all variants with qty in review panel
+
+Review lines now derive from every selection with qty > 0, not only
+the active chip on the product card.
+```
+
+## When committing (agent)
+
+1. Follow the existing git safety workflow (status, diff, log).
+2. Draft subject + body in this format before `git commit`.
+3. Pass the message via HEREDOC.

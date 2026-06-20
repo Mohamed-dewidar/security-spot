@@ -4,6 +4,8 @@ EcomExperts take-home: multi-step security-system bundle builder with live revie
 
 **Agent / contributor guide:** see [AGENTS.md](./AGENTS.md) for architecture, API contract, Figma links, and current phase.
 
+**Frontend plan & components:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
+
 ## Stack
 
 | Layer    | Tech                              |

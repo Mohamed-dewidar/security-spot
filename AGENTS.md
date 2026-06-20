@@ -188,3 +188,7 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 ## How to continue in a new session
 
 Say: **"Continue the bundle builder — see AGENTS.md"** and specify FE or BE work.
+
+**Frontend docs:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) (phases) · [client/COMPONENTS.md](./client/COMPONENTS.md) (component reference)
+
+**Commits:** `<type>(<scope>): <subject>` + body — see [`.cursor/rules/git-commits.mdc`](./.cursor/rules/git-commits.mdc).
