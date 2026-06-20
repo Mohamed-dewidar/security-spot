@@ -44,3 +44,12 @@ Match Figma frames independently: desktop `1:342`, tablet `1:27`, mobile `1:658`
 ## Components
 
 Keep presentational components dumb. Business logic in reducer, selectors, `lib/pricing.ts`.
+
+## Documentation
+
+- Prefer TypeScript types and unit tests over comments.
+- JSDoc only on non-obvious **public** exports in `state/`, `lib/`, `api/`, and `sync/`.
+- Good candidates: `selectionKey`, review-line selectors, pricing preview vs server quote, API facade methods with non-obvious behavior.
+- Skip JSDoc on components, obvious helpers, and props that types already describe.
+- Use descriptive `describe` / `it` names in tests for variant qty and pricing rules — tests are the primary behavior docs.
+- Do not add per-feature markdown files; update `AGENTS.md` checkboxes and `COMPONENTS.md` only when structure changes.

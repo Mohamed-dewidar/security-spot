@@ -69,6 +69,15 @@ home/
 
 ---
 
+## Code documentation
+
+- Prefer **types + tests** over comments; no per-feature markdown files.
+- **JSDoc sparingly** on non-obvious logic only (variant keys, review selectors, pricing preview vs authoritative quote, API quirks).
+- Skip JSDoc on components and obvious helpers.
+- Details: [`.cursor/rules/client-fe.mdc`](./.cursor/rules/client-fe.mdc) (client) · [`.cursor/rules/server-be.mdc`](./.cursor/rules/server-be.mdc) (server).
+
+---
+
 ## What we're building (from brief)
 
 Two-column experience:

@@ -39,3 +39,10 @@ Implement exact routes from `AGENTS.md`. Response shapes must match `server/src/
 
 - Port 3001; client proxies `/api` via Vite
 - Same port/URLs so FE needs zero changes when switching from local.ts
+
+## Documentation
+
+- Prefer TypeScript types and tests over comments.
+- JSDoc only on non-obvious **public** exports (e.g. `calculateQuote`, route handlers with validation edge cases, pricing rules).
+- Skip JSDoc on obvious CRUD, mappers, and Zod schemas where types are self-explanatory.
+- Mirror client pricing behavior; comment only where server authority differs from client preview.
