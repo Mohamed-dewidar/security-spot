@@ -98,6 +98,17 @@ Two-column experience:
 
 ---
 
+## Product dependencies
+
+- Catalog products may declare `requires: string[]` — other product ids auto-added at qty 1 when this product is selected.
+- Example: motion sensor `requires: ["wyze-sense-hub"]`.
+- **Lock state is derived**, not stored: a product is locked (min qty 1) while any selected product still lists it in `requires`.
+- Removing the last dependent removes auto-required products from `selections`.
+- Logic lives in `client/src/lib/productDependencies.ts`; reducer and `local.ts` PATCH/create normalize selections.
+- **Server must mirror** the same rules on PATCH/quote (see `server-be.mdc`).
+
+---
+
 ## API contract (fixed — do not change URLs)
 
 | Method | Route                                 | Purpose                                                 |
@@ -143,28 +154,30 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 
 ### Client
 
-| File                                      | Role                                     |
-| ----------------------------------------- | ---------------------------------------- |
-| `client/src/api/client.ts`                | Single data door — see implementations   |
-| `client/src/api/implementations/local.ts` | In-memory + bundle.json (Phase 1)        |
-| `client/src/api/implementations/http.ts`  | fetch to Express (Phase 2)               |
-| `client/src/state/bundleReducer.ts`       | Selections + accordion state             |
-| `client/src/state/selectors.ts`           | Review lines, totals, step counts        |
-| `client/src/sync/optimisticSync.ts`       | Debounced PATCH queue                    |
-| `client/src/lib/pricing.ts`               | Client preview totals (mirror on server) |
-| `client/src/lib/storage.ts`               | localStorage read/write                  |
-| `client/src/data/bundle.json`             | Catalog seed until server serves it      |
+| File                                      | Role                                       |
+| ----------------------------------------- | ------------------------------------------ |
+| `client/src/api/client.ts`                | Single data door — see implementations     |
+| `client/src/api/implementations/local.ts` | In-memory + bundle.json (Phase 1)          |
+| `client/src/api/implementations/http.ts`  | fetch to Express (Phase 2)                 |
+| `client/src/state/bundleReducer.ts`       | Selections + accordion state               |
+| `client/src/state/selectors.ts`           | Review lines, totals, step counts          |
+| `client/src/sync/optimisticSync.ts`       | Debounced PATCH queue                      |
+| `client/src/lib/pricing.ts`               | Client preview totals (mirror on server)   |
+| `client/src/lib/productDependencies.ts`   | Product `requires` graph + selection rules |
+| `client/src/lib/storage.ts`               | localStorage read/write                    |
+| `client/src/data/bundle.json`             | Catalog seed until server serves it        |
 
 ### Server
 
-| File                                       | Role                                 |
-| ------------------------------------------ | ------------------------------------ |
-| `server/data/bundle.json`                  | Catalog seed (→ SQLite seed)         |
-| `server/src/types/`                        | API types (source of truth)          |
-| `server/src/lib/pricing/calculateQuote.ts` | Authoritative quote logic            |
-| `server/src/routes/v1/`                    | Express routes matching API contract |
-| `server/src/db/schema.sql`                 | SQLite schema                        |
-| `server/src/db/seed.ts`                    | Seed from bundle.json                |
+| File                                       | Role                                    |
+| ------------------------------------------ | --------------------------------------- |
+| `server/data/bundle.json`                  | Catalog seed (→ SQLite seed)            |
+| `server/src/types/`                        | API types (source of truth)             |
+| `server/src/lib/pricing/calculateQuote.ts` | Authoritative quote logic               |
+| `server/src/lib/productDependencies.ts`    | Mirror client `requires` rules on PATCH |
+| `server/src/routes/v1/`                    | Express routes matching API contract    |
+| `server/src/db/schema.sql`                 | SQLite schema                           |
+| `server/src/db/seed.ts`                    | Seed from bundle.json                   |
 
 ---
 
@@ -177,6 +190,7 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 - Use JSON Server — Express + SQLite only
 - Store computed totals in reducer state (derive them)
 - One quantity per product when variants exist
+- Store product lock/required-by state separately (derive from catalog + selections)
 
 ---
 

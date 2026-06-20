@@ -1,6 +1,7 @@
 import bundleData from "@/data/bundle.json";
 import { NotFoundError } from "@/api/errors";
 import type { BundleApi } from "@/api/types";
+import { normalizeSelections } from "@/lib/productDependencies";
 import { parseSelectionKey } from "@/state/keys";
 import type { BundleConfig, Product } from "@/types/catalog";
 import type { CheckoutResult, Quote, QuoteLine } from "@/types/api";
@@ -159,10 +160,10 @@ function resolveCreateInput(
 ): Pick<Configuration, "selections" | "activeVariants" | "openStepId"> {
   return {
     openStepId: input.openStepId ?? catalog.initialSelections.openStepId,
-    selections: {
+    selections: normalizeSelections(catalog, {
       ...catalog.initialSelections.selections,
       ...input.selections,
-    },
+    }),
     activeVariants: {
       ...catalog.initialSelections.activeVariants,
       ...input.activeVariants,
@@ -194,7 +195,11 @@ export const localApi: BundleApi = {
     patch: ConfigurationPatch,
   ): Promise<Configuration> {
     const current = getConfigurationOrThrow(id);
-    const updated = applyPatch(current, patch);
+    const merged = applyPatch(current, patch);
+    const updated: Configuration = {
+      ...merged,
+      selections: normalizeSelections(catalog, merged.selections),
+    };
     configurations.set(id, updated);
     return cloneConfiguration(updated);
   },

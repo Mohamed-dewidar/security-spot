@@ -6,6 +6,7 @@ type ProductListProps = {
   currency: string;
   getActiveVariantId: (product: Product) => string;
   getQuantity: (product: Product) => number;
+  getMinQuantity: (product: Product) => number;
   onVariantChange: (productId: string, variantId: string) => void;
   onQuantityChange: (
     productId: string,
@@ -19,6 +20,7 @@ export function ProductList({
   currency,
   getActiveVariantId,
   getQuantity,
+  getMinQuantity,
   onVariantChange,
   onQuantityChange,
 }: ProductListProps) {
@@ -27,6 +29,7 @@ export function ProductList({
       {products.map((product) => {
         const activeVariantId = getActiveVariantId(product);
         const quantity = getQuantity(product);
+        const minQuantity = getMinQuantity(product);
 
         return (
           <li key={product.id}>
@@ -35,6 +38,7 @@ export function ProductList({
               currency={currency}
               activeVariantId={activeVariantId}
               quantity={quantity}
+              minQuantity={minQuantity}
               onVariantChange={(variantId) =>
                 onVariantChange(product.id, variantId)
               }

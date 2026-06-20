@@ -10,6 +10,7 @@ type AccordionStepProps = {
   currency: string;
   getActiveVariantId: (product: Product) => string;
   getQuantity: (product: Product) => number;
+  getMinQuantity: (product: Product) => number;
   onToggle: () => void;
   onVariantChange: (productId: string, variantId: string) => void;
   onQuantityChange: (
@@ -27,6 +28,7 @@ export function AccordionStep({
   currency,
   getActiveVariantId,
   getQuantity,
+  getMinQuantity,
   onToggle,
   onVariantChange,
   onQuantityChange,
@@ -66,6 +68,7 @@ export function AccordionStep({
           currency={currency}
           getActiveVariantId={getActiveVariantId}
           getQuantity={getQuantity}
+          getMinQuantity={getMinQuantity}
           onVariantChange={onVariantChange}
           onQuantityChange={onQuantityChange}
         />

@@ -4,6 +4,7 @@ import { NextStepButton } from "@/components/builder/NextStepButton";
 import {
   selectActiveVariantId,
   selectProductCardQuantity,
+  selectProductMinQuantity,
   selectStepSelectedCount,
 } from "@/state/selectors";
 import {
@@ -38,6 +39,11 @@ export function BuilderPanel() {
   const getQuantity = useCallback(
     (product: Product) => selectProductCardQuantity(state, product),
     [state],
+  );
+
+  const getMinQuantity = useCallback(
+    (product: Product) => selectProductMinQuantity(catalog, state, product),
+    [catalog, state],
   );
 
   const handleOpenStep = useCallback(
@@ -89,6 +95,7 @@ export function BuilderPanel() {
                 currency={catalog.meta.currency}
                 getActiveVariantId={getActiveVariantId}
                 getQuantity={getQuantity}
+                getMinQuantity={getMinQuantity}
                 onToggle={() => handleOpenStep(step.id)}
                 onVariantChange={handleVariantChange}
                 onQuantityChange={handleQuantityChange}

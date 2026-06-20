@@ -1,4 +1,8 @@
-import { selectionKey } from "@/state/keys";
+import {
+  applySetQuantity,
+  normalizeSelections,
+} from "@/lib/productDependencies";
+import type { BundleConfig } from "@/types/catalog";
 import type {
   ActiveVariants,
   Configuration,
@@ -29,19 +33,21 @@ export type BundleAction =
     };
 
 export function createInitialState(
+  catalog: BundleConfig,
   configuration: Pick<
     Configuration,
     "selections" | "activeVariants" | "openStepId"
   >,
 ): BundleState {
   return {
-    selections: { ...configuration.selections },
+    selections: normalizeSelections(catalog, configuration.selections),
     activeVariants: { ...configuration.activeVariants },
     openStepId: configuration.openStepId,
   };
 }
 
 export function bundleReducer(
+  catalog: BundleConfig,
   state: BundleState,
   action: BundleAction,
 ): BundleState {
@@ -61,15 +67,13 @@ export function bundleReducer(
     case "SET_QUANTITY": {
       const variantId =
         action.variantId ?? state.activeVariants[action.productId] ?? undefined;
-      const key = selectionKey(action.productId, variantId);
-      const quantity = Math.max(0, action.quantity);
-      const selections = { ...state.selections };
-
-      if (quantity === 0) {
-        delete selections[key];
-      } else {
-        selections[key] = quantity;
-      }
+      const selections = applySetQuantity(
+        catalog,
+        state.selections,
+        action.productId,
+        variantId,
+        action.quantity,
+      );
 
       return { ...state, selections };
     }
@@ -77,7 +81,7 @@ export function bundleReducer(
     case "HYDRATE":
       return {
         openStepId: action.payload.openStepId,
-        selections: { ...action.payload.selections },
+        selections: normalizeSelections(catalog, action.payload.selections),
         activeVariants: { ...action.payload.activeVariants },
       };
 

@@ -1,5 +1,6 @@
 import { DEFAULT_VARIANT_ID, selectionKey } from "@/state/keys";
 import { buildQuoteLines, calculatePreviewTotals } from "@/lib/pricing";
+import { selectMinQuantity } from "@/lib/productDependencies";
 import type { Quote, QuoteLine } from "@/types/api";
 import type { BundleConfig, Product, ReviewGroupId } from "@/types/catalog";
 import type { Selections } from "@/types/configuration";
@@ -29,6 +30,25 @@ export function selectProductCardQuantity(
   const variantId = selectActiveVariantId(state, product);
   const key = selectionKey(product.id, variantId);
   return state.selections[key] ?? 0;
+}
+
+/** Stepper minimum for a product — 1 while another selection requires it. */
+export function selectProductMinQuantity(
+  catalog: BundleConfig,
+  state: BundleState,
+  product: Product,
+): number {
+  const quantity = product.variants?.length
+    ? Math.max(
+        ...product.variants.map(
+          (variant) =>
+            state.selections[selectionKey(product.id, variant.id)] ?? 0,
+        ),
+        0,
+      )
+    : (state.selections[selectionKey(product.id)] ?? 0);
+
+  return selectMinQuantity(catalog, state.selections, product.id, quantity);
 }
 
 function productHasSelection(

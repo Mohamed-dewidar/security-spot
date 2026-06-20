@@ -22,8 +22,9 @@ React + TypeScript + Tailwind + Vite.
 ## State
 
 - `bundleReducer` + Context for selections, activeVariants, openStepId
-- Selectors for review lines, totals, step "N selected"
-- Do not store computed totals in state
+- Selectors for review lines, totals, step "N selected", min qty for locked products
+- Product `requires` dependencies in `lib/productDependencies.ts` (auto-add/remove; lock derived)
+- Do not store computed totals or lock state in reducer/API payloads
 
 ## UI patterns
 
@@ -43,7 +44,7 @@ Match Figma frames independently: desktop `1:342`, tablet `1:27`, mobile `1:658`
 
 ## Components
 
-Keep presentational components dumb. Business logic in reducer, selectors, `lib/pricing.ts`.
+Keep presentational components dumb. Business logic in reducer, selectors, `lib/pricing.ts`, `lib/productDependencies.ts`.
 
 ## Documentation
 

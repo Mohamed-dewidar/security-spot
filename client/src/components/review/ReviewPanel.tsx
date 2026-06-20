@@ -7,6 +7,7 @@ import {
 import { ReviewTotals } from "@/components/review/ReviewTotals";
 import type { PriceFormat } from "@/lib/formatPrice";
 import { findProductInCatalog } from "@/lib/pricing";
+import { selectMinQuantity } from "@/lib/productDependencies";
 import { parseSelectionKey } from "@/state/keys";
 import { selectReviewLinesByGroup, selectTotals } from "@/state/selectors";
 import {
@@ -17,6 +18,7 @@ import {
 } from "@/state/bundleContext";
 import type { BundleConfig } from "@/types/catalog";
 import type { QuoteLine } from "@/types/api";
+import type { Selections } from "@/types/configuration";
 
 function priceFormatForLine(line: QuoteLine): PriceFormat {
   return line.pricingUnit === "monthly" ? "monthly" : "line";
@@ -41,9 +43,12 @@ function resolveLineImageUrl(
   return product.imageUrl;
 }
 
-function resolveMinQuantity(catalog: BundleConfig, line: QuoteLine): number {
-  const product = findProductInCatalog(catalog, line.productId);
-  return product?.required && line.quantity > 0 ? 1 : 0;
+function resolveMinQuantity(
+  catalog: BundleConfig,
+  selections: Selections,
+  line: QuoteLine,
+): number {
+  return selectMinQuantity(catalog, selections, line.productId, line.quantity);
 }
 
 export function ReviewPanel() {
@@ -75,12 +80,12 @@ export function ReviewPanel() {
         compareAtPrice: line.compareAtLineTotal,
         currency: totals.currency,
         priceFormat: priceFormatForLine(line),
-        minQuantity: resolveMinQuantity(catalog, line),
+        minQuantity: resolveMinQuantity(catalog, state.selections, line),
       }));
     }
 
     return result;
-  }, [catalog, groupedLines, totals.currency]);
+  }, [catalog, groupedLines, state.selections, totals.currency]);
 
   const handleQuantityChange = useCallback(
     (lineKey: string, quantity: number) => {

@@ -9,6 +9,7 @@ import {
 import { selectionKey } from "@/state/keys";
 import {
   selectProductCardQuantity,
+  selectProductMinQuantity,
   selectReviewLines,
   selectStepSelectedCount,
   selectTotals,
@@ -28,25 +29,29 @@ function findProduct(productId: string): Product {
 }
 
 function reduceFromInitial(
-  ...actions: Parameters<typeof bundleReducer>[1][]
+  ...actions: Parameters<typeof bundleReducer>[2][]
 ): BundleState {
-  let state = createInitialState(catalog.initialSelections);
+  let state = createInitialState(catalog, catalog.initialSelections);
   for (const action of actions) {
-    state = bundleReducer(state, action);
+    state = bundleReducer(catalog, state, action);
   }
   return state;
 }
 
 describe("bundleReducer", () => {
   it("hydrates selections, active variants, and open step", () => {
-    const state = bundleReducer(createInitialState(catalog.initialSelections), {
-      type: "HYDRATE",
-      payload: {
-        openStepId: "plan",
-        selections: { "wyze-cam-v4:black": 3 },
-        activeVariants: { "wyze-cam-v4": "black" },
+    const state = bundleReducer(
+      catalog,
+      createInitialState(catalog, catalog.initialSelections),
+      {
+        type: "HYDRATE",
+        payload: {
+          openStepId: "plan",
+          selections: { "wyze-cam-v4:black": 3 },
+          activeVariants: { "wyze-cam-v4": "black" },
+        },
       },
-    });
+    );
 
     expect(state.openStepId).toBe("plan");
     expect(state.selections).toEqual({ "wyze-cam-v4:black": 3 });
@@ -77,14 +82,28 @@ describe("bundleReducer", () => {
     expect(state.selections["wyze-cam-v4:grey"]).toBe(4);
     expect(state.selections["wyze-cam-v4:white"]).toBe(1);
   });
+
+  it("removes the hub when the last motion sensor is cleared", () => {
+    const state = reduceFromInitial({
+      type: "SET_QUANTITY",
+      productId: "wyze-sense-motion-sensor",
+      quantity: 0,
+    });
+
+    expect(
+      state.selections[selectionKey("wyze-sense-motion-sensor")],
+    ).toBeUndefined();
+    expect(state.selections[selectionKey("wyze-sense-hub")]).toBeUndefined();
+  });
 });
 
 describe("variant quantity rules", () => {
   const wyzeCamV4 = findProduct("wyze-cam-v4");
   const doorbell = findProduct("wyze-duo-cam-doorbell");
+  const hub = findProduct("wyze-sense-hub");
 
   it("card stepper qty reflects the active variant only", () => {
-    const state = createInitialState(catalog.initialSelections);
+    const state = createInitialState(catalog, catalog.initialSelections);
 
     expect(selectProductCardQuantity(state, wyzeCamV4)).toBe(1);
 
@@ -117,7 +136,7 @@ describe("variant quantity rules", () => {
 
     expect(selectProductCardQuantity(state, wyzeCamV4)).toBe(1);
 
-    state = bundleReducer(state, {
+    state = bundleReducer(catalog, state, {
       type: "SET_ACTIVE_VARIANT",
       productId: "wyze-cam-v4",
       variantId: "black",
@@ -125,7 +144,7 @@ describe("variant quantity rules", () => {
 
     expect(selectProductCardQuantity(state, wyzeCamV4)).toBe(3);
 
-    state = bundleReducer(state, {
+    state = bundleReducer(catalog, state, {
       type: "SET_ACTIVE_VARIANT",
       productId: "wyze-cam-v4",
       variantId: "grey",
@@ -207,11 +226,17 @@ describe("variant quantity rules", () => {
     expect(totals.subtotal).toBeGreaterThan(0);
     expect(totals.total).toBeGreaterThan(totals.subtotal - 1);
   });
+
+  it("derives min quantity for hub while motion sensor is selected", () => {
+    const state = createInitialState(catalog, catalog.initialSelections);
+
+    expect(selectProductMinQuantity(catalog, state, hub)).toBe(1);
+  });
 });
 
 describe("selectStepSelectedCount", () => {
   it("counts products with any variant qty > 0 in a step", () => {
-    const state = createInitialState(catalog.initialSelections);
+    const state = createInitialState(catalog, catalog.initialSelections);
 
     expect(selectStepSelectedCount(catalog, state, "cameras")).toBe(2);
     expect(selectStepSelectedCount(catalog, state, "plan")).toBe(1);

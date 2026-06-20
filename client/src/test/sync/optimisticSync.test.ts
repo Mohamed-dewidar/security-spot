@@ -22,7 +22,7 @@ afterEach(() => {
 
 describe("bundleStateToPatch", () => {
   it("maps reducer fields to a configuration patch", () => {
-    const state = createInitialState(catalog.initialSelections);
+    const state = createInitialState(catalog, catalog.initialSelections);
     expect(bundleStateToPatch(state)).toEqual({
       selections: state.selections,
       activeVariants: state.activeVariants,
@@ -38,7 +38,7 @@ describe("createConfigurationSyncController", () => {
     const created = await localApi.createConfiguration();
     const controller = createConfigurationSyncController(created.id, 400);
 
-    const firstState = createInitialState(created);
+    const firstState = createInitialState(catalog, created);
     const secondState = {
       ...firstState,
       openStepId: "plan",
@@ -68,7 +68,7 @@ describe("createConfigurationSyncController", () => {
     const created = await localApi.createConfiguration();
     const controller = createConfigurationSyncController(created.id, 400);
     const state = {
-      ...createInitialState(created),
+      ...createInitialState(catalog, created),
       openStepId: "sensors",
     };
 

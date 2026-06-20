@@ -366,12 +366,13 @@ Before marking a component done:
 
 ## Logic modules (not components)
 
-| Module    | File                         | Role                                   |
-| --------- | ---------------------------- | -------------------------------------- |
-| Reducer   | `src/state/bundleReducer.ts` | Selections, active variants, open step |
-| Selectors | `src/state/selectors.ts`     | Review lines, totals, step counts      |
-| Keys      | `src/state/keys.ts`          | `selectionKey(productId, variantId?)`  |
-| Pricing   | `src/lib/pricing.ts`         | Client preview totals                  |
-| Storage   | `src/lib/storage.ts`         | localStorage save/restore              |
-| API       | `src/api/client.ts`          | Single data door                       |
-| Sync      | `src/sync/optimisticSync.ts` | Debounced PATCH (~400ms)               |
+| Module       | File                             | Role                                   |
+| ------------ | -------------------------------- | -------------------------------------- |
+| Reducer      | `src/state/bundleReducer.ts`     | Selections, active variants, open step |
+| Selectors    | `src/state/selectors.ts`         | Review lines, totals, step counts      |
+| Keys         | `src/state/keys.ts`              | `selectionKey(productId, variantId?)`  |
+| Pricing      | `src/lib/pricing.ts`             | Client preview totals                  |
+| Dependencies | `src/lib/productDependencies.ts` | Product `requires` graph               |
+| Storage      | `src/lib/storage.ts`             | localStorage save/restore              |
+| API          | `src/api/client.ts`              | Single data door                       |
+| Sync         | `src/sync/optimisticSync.ts`     | Debounced PATCH (~400ms)               |

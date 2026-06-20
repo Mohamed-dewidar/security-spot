@@ -164,7 +164,8 @@
           "description": "Motion detection for doors, windows, and rooms.",
           "imageUrl": "/images/products/wyze-sense-motion-sensor.png",
           "price": 29.99,
-          "reviewGroupId": "sensors"
+          "reviewGroupId": "sensors",
+          "requires": ["wyze-sense-hub"]
         },
         {
           "id": "wyze-sense-hub",
@@ -173,8 +174,7 @@
           "imageUrl": "/images/products/wyze-sense-hub.png",
           "price": 0,
           "compareAtPrice": 29.92,
-          "reviewGroupId": "sensors",
-          "required": true
+          "reviewGroupId": "sensors"
         }
       ]
     },

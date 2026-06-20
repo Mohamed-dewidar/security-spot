@@ -48,9 +48,10 @@ export function BundleProvider({
   children,
 }: BundleProviderProps) {
   const [state, dispatch] = useReducer(
-    bundleReducer,
+    (currentState: BundleState, action: BundleAction) =>
+      bundleReducer(catalog, currentState, action),
     configuration,
-    createInitialState,
+    (config: Configuration): BundleState => createInitialState(catalog, config),
   );
   const skipSyncRef = useRef(true);
   const syncRef = useRef<ConfigurationSyncController>(

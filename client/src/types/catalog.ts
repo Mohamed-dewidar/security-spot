@@ -25,8 +25,8 @@ export type Product = {
   variants?: ProductVariant[];
   reviewGroupId: ReviewGroupId;
   pricingUnit?: PricingUnit;
-  /** When true, qty cannot drop below 1 once selected (e.g. required hub). */
-  required?: boolean;
+  /** Product ids auto-added at qty 1 when this product is selected (qty > 0). */
+  requires?: string[];
 };
 
 export type BuilderStep = {

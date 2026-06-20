@@ -28,6 +28,12 @@ Implement exact routes from `AGENTS.md`. Response shapes must match `server/src/
 - Mirror logic from `client/src/lib/pricing.ts` (or share via path alias)
 - Resolve prices from DB only — ignore client-sent prices
 
+## Product dependencies
+
+- Catalog `Product.requires: string[]` — auto-add at qty 1 when a dependent is selected
+- Normalize `selections` on PATCH/create (mirror `client/src/lib/productDependencies.ts`)
+- Lock/min-qty is derived from catalog + selections — do not persist separately
+
 ## Routes
 
 - `GET /config` — assemble nested BundleConfig from DB

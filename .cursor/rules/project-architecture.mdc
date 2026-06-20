@@ -28,6 +28,10 @@ FE first via `api/client.ts` + `local.ts`. BE later — flip `VITE_USE_API=true`
 
 Separate qty per `productId:variantId`. Card stepper = active variant. Review shows all variants with qty > 0.
 
+## Product requires
+
+Catalog `requires: string[]` on products; auto-add/remove companions in `selections`. Lock state derived — mirror on server PATCH.
+
 ## API (fixed)
 
 `GET /api/v1/config` · `POST/PATCH/GET /api/v1/configurations/:id` · `POST .../save` · `POST .../quote` · `POST .../checkout`

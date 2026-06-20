@@ -9,6 +9,7 @@ type ProductCardProps = {
   currency: string;
   activeVariantId: string | null;
   quantity: number;
+  minQuantity?: number;
   onVariantChange: (variantId: string) => void;
   onQuantityChange: (quantity: number) => void;
 };
@@ -38,13 +39,13 @@ export function ProductCard({
   currency,
   activeVariantId,
   quantity,
+  minQuantity = 0,
   onVariantChange,
   onQuantityChange,
 }: ProductCardProps) {
   const hasVariants = Boolean(product.variants?.length);
   const imageUrl = resolveImageUrl(product, activeVariantId);
   const priceFormat = priceFormatForProduct(product);
-  const minQuantity = product.required && quantity > 0 ? 1 : 0;
 
   return (
     <article className="flex flex-col gap-15 border-b border-gray-300 pb-20 last:border-b-0 last:pb-0 md:flex-row md:items-start md:gap-20 lg:gap-24">
