@@ -31,10 +31,10 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] Shared types + `bundle.json` catalog seed
 - [x] `client/src/api/client.ts` + `implementations/local.ts`
 - [x] Reducer + selectors (variant qty logic)
-- [ ] Optimistic UI + debounced sync queue
+- [x] Optimistic UI + debounced sync queue
 - [ ] Builder UI (accordion, product cards, variants, steppers)
 - [ ] Review panel (grouped lines, synced steppers, totals)
-- [ ] localStorage save/restore ("Save my system for later")
+- [x] localStorage save/restore ("Save my system for later")
 - [ ] Responsive (tablet → mobile)
 - [ ] `server/` Express + TS + SQLite
 - [ ] `client/src/api/implementations/http.ts` + `VITE_USE_API=true`
