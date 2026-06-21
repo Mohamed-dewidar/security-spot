@@ -34,22 +34,59 @@ pnpm preview   # serve the production build locally
 
 ---
 
+## Full-stack mode (Express + SQLite)
+
+To run the client against the real API instead of the in-memory `local.ts` implementation:
+
+**Terminal 1 — API** (port `3001`):
+
+```bash
+cd server
+pnpm install
+pnpm dev
+```
+
+Verify: `curl http://localhost:3001/api/v1/health` → `{"ok":true}`
+
+**Terminal 2 — client** (port `5173`):
+
+```bash
+cd client
+cp .env.example .env   # if you don't have .env yet
+# Set VITE_USE_API=true in .env
+pnpm dev
+```
+
+Open **http://localhost:5173**. Vite proxies `/api` to the Express server during dev — no CORS setup needed.
+
+With `VITE_USE_API=true`, configuration changes debounce to `PATCH /api/v1/configurations/:id`. Save-for-later still uses **localStorage**; the server validates configuration ids on restore.
+
+**Server tests**
+
+```bash
+cd server
+pnpm test
+```
+
+---
+
 **Agent / contributor guide:** [AGENTS.md](./AGENTS.md) · **Frontend plan & components:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
 
 ## Stack
 
-| Layer    | Tech                              | Status       |
-| -------- | --------------------------------- | ------------ |
-| Frontend | React, TypeScript, Tailwind, Vite | Implemented  |
-| Backend  | Express, TypeScript, SQLite       | Not in scope |
+| Layer    | Tech                              | Status      |
+| -------- | --------------------------------- | ----------- |
+| Frontend | React, TypeScript, Tailwind, Vite | Implemented |
+| Backend  | Express, TypeScript, SQLite       | Implemented |
 
-This submission is **frontend-only**. Catalog and configuration are served by `client/src/api/implementations/local.ts` (no server to start).
+Default reviewer flow is **frontend-only** (`local.ts`). Set `VITE_USE_API=true` to use the Express API.
 
 ## Project structure
 
 ```
-├── client/     # React app (run from here)
-├── docs/       # Frontend implementation notes
+├── client/     # React app
+├── server/     # Express API + SQLite
+├── docs/       # Implementation plans
 └── AGENTS.md   # Architecture & progress tracker
 ```
 

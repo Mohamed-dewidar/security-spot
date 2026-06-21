@@ -28,7 +28,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 
 **Frontend:** complete.
 
-**Backend:** in progress — follow [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) slices.
+**Backend:** complete.
 
 - [x] `client/` scaffolded (Vite + React + TS)
 - [x] Tailwind configured
@@ -41,10 +41,10 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] localStorage save/restore ("Save my system for later")
 - [x] Responsive (tablet → mobile)
 - [x] Root README run instructions + polish
-- [ ] **BE slice 1:** server scaffold + health + `GET /config`
-- [ ] **BE slice 2:** configuration CRUD + `productDependencies` on write
-- [ ] **BE slice 3:** quote + checkout endpoints
-- [ ] **BE slice 4:** `http.ts` + Vite proxy + `VITE_USE_API=true`
+- [x] **BE slice 1:** server scaffold + health + `GET /config`
+- [x] **BE slice 2:** configuration CRUD + `productDependencies` on write
+- [x] **BE slice 3:** quote + checkout endpoints
+- [x] **BE slice 4:** `http.ts` + Vite proxy + `VITE_USE_API=true`
 
 ---
 
@@ -53,7 +53,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 ```
 home/
 ├── client/          # React + TypeScript + Tailwind
-├── server/          # Express + TypeScript + SQLite (to build)
+├── server/          # Express + TypeScript + SQLite
 ├── docs/            # FRONTEND_PLAN.md (done) · BACKEND_PLAN.md (active)
 ├── AGENTS.md        # This file
 └── README.md        # Run instructions
@@ -156,7 +156,7 @@ JSON body on all errors: `{ "message": "..." }`
 | ------------------ | ----------------------------------------- | -------------------------------------------------- |
 | API surface        | `client/src/api/implementations/local.ts` | `client/src/test/api/local.test.ts`                |
 | Product `requires` | `client/src/lib/productDependencies.ts`   | `client/src/test/lib/productDependencies.test.ts`  |
-| Server (to build)  | Mirror `local.ts`                         | Mirror client test scenarios in `server/src/test/` |
+| Server             | Mirror `local.ts`                         | Mirror client test scenarios in `server/src/test/` |
 
 ---
 
@@ -194,7 +194,7 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 | ----------------------------------------- | ------------------------------------------ |
 | `client/src/api/client.ts`                | Single data door — see implementations     |
 | `client/src/api/implementations/local.ts` | In-memory + bundle.json (Phase 1)          |
-| `client/src/api/implementations/http.ts`  | fetch to Express (Phase 2)                 |
+| `client/src/api/implementations/http.ts`  | fetch to Express via Vite proxy            |
 | `client/src/state/bundleReducer.ts`       | Selections + accordion state               |
 | `client/src/state/selectors.ts`           | Review lines, totals, step counts          |
 | `client/src/sync/optimisticSync.ts`       | Debounced PATCH queue                      |
@@ -239,21 +239,17 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 5. ~~Interactions (accordion, steppers, variant sync)~~
 6. ~~localStorage save/restore~~
 7. ~~Responsive tablet + mobile~~
-8. Express + SQLite — [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) slices 1–3
-9. `http.ts` + flip `VITE_USE_API=true` — slice 4
+8. ~~Express + SQLite — [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) slices 1–3~~
+9. ~~`http.ts` + flip `VITE_USE_API=true` — slice 4~~
 
 ---
 
 ## How to continue in a new session
 
-**Backend (current):**
+**Full-stack dev:** see [README.md](./README.md) — start `server` on port 3001, set `VITE_USE_API=true` in `client/.env`, then `pnpm dev` in `client/`.
 
-> Continue BE — slice N: \<goal\>. Mirror `local.ts`. See [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md).
+**Frontend fixes:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
 
-Example: _"Continue BE — slice 1: scaffold server + GET /api/v1/config."_
-
-**Frontend fixes only:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
-
-When creating `server/`, follow [`.cursor/rules/server-be.mdc`](./.cursor/rules/server-be.mdc).
+**Backend reference:** [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) · [`.cursor/rules/server-be.mdc`](./.cursor/rules/server-be.mdc)
 
 **Commits:** `<type>(<scope>): <subject>` + body — see [`.cursor/rules/git-commits.mdc`](./.cursor/rules/git-commits.mdc).
