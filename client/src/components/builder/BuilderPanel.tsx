@@ -1,6 +1,5 @@
-import { Fragment, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { AccordionStep } from "@/components/builder/AccordionStep";
-import { NextStepButton } from "@/components/builder/NextStepButton";
 import {
   selectActiveVariantId,
   selectProductCardQuantity,
@@ -46,11 +45,14 @@ export function BuilderPanel() {
     [catalog, state],
   );
 
-  const handleOpenStep = useCallback(
+  const handleToggleStep = useCallback(
     (stepId: string) => {
-      dispatch({ type: "SET_OPEN_STEP", stepId });
+      dispatch({
+        type: "SET_OPEN_STEP",
+        stepId: state.openStepId === stepId ? "" : stepId,
+      });
     },
-    [dispatch],
+    [dispatch, state.openStepId],
   );
 
   const handleVariantChange = useCallback(
@@ -86,29 +88,22 @@ export function BuilderPanel() {
           );
 
           return (
-            <Fragment key={step.id}>
-              <AccordionStep
-                step={step}
-                totalSteps={totalSteps}
-                isOpen={isOpen}
-                selectedCount={selectedCount}
-                currency={catalog.meta.currency}
-                getActiveVariantId={getActiveVariantId}
-                getQuantity={getQuantity}
-                getMinQuantity={getMinQuantity}
-                onToggle={() => handleOpenStep(step.id)}
-                onVariantChange={handleVariantChange}
-                onQuantityChange={handleQuantityChange}
-              />
-              {isOpen && step.nextStepLabel ? (
-                <div className="bg-step-bg pt-[15px] pb-[20px] flex items-center justify-center">
-                  <NextStepButton
-                    label={step.nextStepLabel}
-                    onClick={handleNextStep}
-                  />
-                </div>
-              ) : null}
-            </Fragment>
+            <AccordionStep
+              key={step.id}
+              step={step}
+              totalSteps={totalSteps}
+              isOpen={isOpen}
+              selectedCount={selectedCount}
+              currency={catalog.meta.currency}
+              nextStepLabel={step.nextStepLabel}
+              getActiveVariantId={getActiveVariantId}
+              getQuantity={getQuantity}
+              getMinQuantity={getMinQuantity}
+              onToggle={() => handleToggleStep(step.id)}
+              onNextStep={handleNextStep}
+              onVariantChange={handleVariantChange}
+              onQuantityChange={handleQuantityChange}
+            />
           );
         })}
       </div>
