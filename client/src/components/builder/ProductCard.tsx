@@ -44,50 +44,71 @@ export function ProductCard({
     product.compareAtPrice !== undefined &&
     product.compareAtPrice > product.price;
   const isMonthly = product.pricingUnit === "monthly";
+  const learnMoreUrl = product.learnMoreUrl ?? "#";
+
+  const variantChips =
+    hasVariants && product.variants ? (
+      <VariantChips
+        variants={product.variants}
+        activeVariantId={activeVariantId}
+        onSelect={onVariantChange}
+      />
+    ) : null;
 
   return (
     <article
-      className={` h-full w-full lg:w-[224px] flex items-start gap-[19px] overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:flex-col lg:py-[15px] ${
-        isSelected ? "border-2 border-brand-border" : ""
+      className={`flex gap-[19px] h-full w-full items-start overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:w-[224px] lg:min-h-[330px] lg:flex-col lg:justify-start ${
+        isSelected
+          ? " outline-2 outline-brand-border lg:py-[15px]"
+          : "outline-none"
       }`}
     >
-      {/* Image — portrait on mobile/tablet, landscape on desktop */}
-      <div className="relative h-[137px] w-[101px] shrink-0 overflow-hidden rounded-image lg:h-[117px] lg:w-[202px]">
+      <div
+        className={`relative shrink-0 overflow-hidden rounded-image h-[137px] w-[101px] lg:h-[120px] lg:w-[202px] `}
+      >
         <img
           src={imageUrl}
           alt=""
           className="absolute inset-0 h-full w-full object-contain"
         />
         {product.badge ? (
-          <span className="absolute left-0 top-0 rounded-full bg-brand px-6 py-2 text-xs font-semibold text-on-brand">
+          <span className="absolute left-0 top-0 rounded-card bg-brand px-[6px] py-[2px] text-xs font-semibold text-on-brand">
             {product.badge.text}
           </span>
         ) : null}
       </div>
 
-      {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col gap-[10px] lg:w-full lg:flex-none">
-        {/* Title + description */}
-        <div className="space-y-[8px]">
-          <h3 className="text-base font-semibold leading-snug tracking-body text-text lg:text-lg">
+      <div className="flex min-w-0 flex-1 flex-col justify-between gap-[10px] lg:w-full lg:flex-none">
+        <div className="flex flex-col gap-[8px]">
+          <h3
+            className={`font-semibold leading-none tracking-body text-text ${
+              isSelected ? "text-base lg:text-lg" : "text-base"
+            }`}
+          >
             {product.title}
           </h3>
-          <p className="text-xs leading-body tracking-body text-text-body lg:text-sm">
-            {product.description}
+          <p
+            className={`font-medium leading-body tracking-body text-text-body ${
+              isSelected ? "text-xs lg:text-sm" : "text-xs"
+            }`}
+          >
+            <span>{product.description} </span>
+            <a
+              href={learnMoreUrl}
+              className="text-link underline decoration-solid underline-offset-auto"
+            >
+              Learn More
+            </a>
           </p>
         </div>
 
-        {/* Variant chips */}
-        {hasVariants && product.variants ? (
-          <VariantChips
-            variants={product.variants}
-            activeVariantId={activeVariantId}
-            onSelect={onVariantChange}
-          />
-        ) : null}
+        {variantChips}
 
-        {/* Stepper (left) + price column (right) */}
-        <div className="flex w-full items-end gap-[10px]">
+        <div
+          className={`flex w-full items-end ${
+            isSelected ? "gap-[10px]" : "gap-[46px]"
+          }`}
+        >
           <QuantityStepper
             value={quantity}
             min={minQuantity}
@@ -96,13 +117,13 @@ export function ProductCard({
             compact
           />
 
-          <div className="flex flex-1 flex-col items-end gap-[3px] text-right">
+          <div className="flex min-w-0 flex-1 flex-col items-end gap-[3px] text-right text-base leading-none tracking-body lg:flex-row lg:items-center lg:justify-end">
             {showCompareAt ? (
-              <span className="text-base leading-none tracking-body text-sale line-through">
+              <span className="shrink-0 text-sale line-through">
                 {formatPrice(product.compareAtPrice!, currency)}
               </span>
             ) : null}
-            <span className="text-base leading-none tracking-body text-gray-70">
+            <span className="shrink-0 text-gray-70">
               {formatPrice(product.price, currency, {
                 format: isMonthly ? "monthly" : undefined,
               })}

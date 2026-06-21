@@ -18,6 +18,8 @@ export type Product = {
   id: string;
   title: string;
   description: string;
+  /** Optional product detail page; card shows "Learn More" when set. */
+  learnMoreUrl?: string;
   imageUrl: string;
   price: number;
   compareAtPrice?: number;

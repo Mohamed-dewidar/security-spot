@@ -16,6 +16,46 @@ type QuantityStepperProps = {
 const defaultButtonClassName =
   "inline-flex shrink-0 items-center justify-center border-0 bg-transparent text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 disabled:bg-stepper-disabled min-h-11 min-w-11 text-base leading-stepper md:min-h-9 md:min-w-9 md:text-sm";
 
+function CompactMinusIcon() {
+  return (
+    <svg
+      width="8"
+      height="10"
+      viewBox="0 0 8 10"
+      fill="none"
+      aria-hidden
+      className="shrink-0"
+    >
+      <path
+        d="M0 5H8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function CompactPlusIcon() {
+  return (
+    <svg
+      width="8"
+      height="8"
+      viewBox="0 0 8 8"
+      fill="none"
+      aria-hidden
+      className="shrink-0"
+    >
+      <path
+        d="M4 0V8M0 4H8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function QuantityStepper({
   value,
   min = 0,
@@ -37,25 +77,29 @@ export function QuantityStepper({
   };
 
   if (compact) {
+    const minusButtonClassName = atMin
+      ? "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control border-2 border-gray-300 bg-surface text-text transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+      : "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control bg-gray-200 text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-300 enabled:active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-40";
+
     return (
       <div
         role="group"
         aria-label={ariaLabel}
-        className="inline-flex items-center gap-[10px] py-1"
+        className="inline-flex shrink-0 items-center justify-center gap-[10px] py-[4px]"
       >
         <button
           type="button"
           aria-label={`Decrease ${ariaLabel}`}
           disabled={disabled || atMin}
           onClick={decrement}
-          className="inline-flex size-5 shrink-0 items-center justify-center rounded-control border-2 border-gray-300 bg-surface text-base font-medium text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-40"
+          className={minusButtonClassName}
         >
-          −
+          <CompactMinusIcon />
         </button>
         <span
           aria-live="polite"
           aria-atomic="true"
-          className="min-w-4 text-center text-base font-medium leading-stepper text-obsidian tabular-nums"
+          className="min-w-[16px] text-center text-base font-medium leading-stepper text-obsidian tabular-nums"
         >
           {value}
         </span>
@@ -64,9 +108,9 @@ export function QuantityStepper({
           aria-label={`Increase ${ariaLabel}`}
           disabled={disabled || atMax}
           onClick={increment}
-          className="inline-flex size-5 shrink-0 items-center justify-center rounded-control bg-gray-200 text-base font-medium text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-300 enabled:active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-40"
+          className="inline-flex size-[20px] shrink-0 items-center justify-center rounded-control bg-gray-200 text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-300 enabled:active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          +
+          <CompactPlusIcon />
         </button>
       </div>
     );

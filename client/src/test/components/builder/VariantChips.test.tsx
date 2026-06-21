@@ -43,7 +43,7 @@ describe("VariantChips", () => {
     expect(onSelect).toHaveBeenCalledWith("black");
   });
 
-  it("scrolls horizontally on mobile and wraps on tablet+", () => {
+  it("wraps chips and allows horizontal scroll when needed", () => {
     const { container } = render(
       <VariantChips
         variants={variants}
@@ -53,11 +53,10 @@ describe("VariantChips", () => {
     );
 
     const listbox = container.firstChild as HTMLElement;
-    expect(listbox).toHaveClass("overflow-x-auto", "max-md:flex-nowrap");
-    expect(listbox).toHaveClass("md:flex-wrap");
+    expect(listbox).toHaveClass("overflow-x-auto", "flex-wrap");
   });
 
-  it("uses touch-friendly chip height on mobile", () => {
+  it("uses Figma chip dimensions", () => {
     render(
       <VariantChips
         variants={variants}
@@ -67,7 +66,8 @@ describe("VariantChips", () => {
     );
 
     expect(screen.getByRole("option", { name: "White" })).toHaveClass(
-      "min-h-11",
+      "h-[26px]",
+      "w-[65px]",
     );
   });
 });
