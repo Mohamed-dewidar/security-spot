@@ -26,6 +26,10 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 
 ## Current phase (update as you progress)
 
+**Frontend:** complete.
+
+**Backend:** in progress — follow [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) slices.
+
 - [x] `client/` scaffolded (Vite + React + TS)
 - [x] Tailwind configured
 - [x] Shared types + `bundle.json` catalog seed
@@ -36,10 +40,11 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] Review panel (grouped lines, synced steppers, totals)
 - [x] localStorage save/restore ("Save my system for later")
 - [x] Responsive (tablet → mobile)
-- [ ] `server/` Express + TS + SQLite
-- [ ] `client/src/api/implementations/http.ts` + `VITE_USE_API=true` (stub exists; needs Express)
-- [ ] Quote + checkout endpoints
 - [x] Root README run instructions + polish
+- [ ] **BE slice 1:** server scaffold + health + `GET /config`
+- [ ] **BE slice 2:** configuration CRUD + `productDependencies` on write
+- [ ] **BE slice 3:** quote + checkout endpoints
+- [ ] **BE slice 4:** `http.ts` + Vite proxy + `VITE_USE_API=true`
 
 ---
 
@@ -48,7 +53,8 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 ```
 home/
 ├── client/          # React + TypeScript + Tailwind
-├── server/          # Express + TypeScript + SQLite (no mock/json-server)
+├── server/          # Express + TypeScript + SQLite (to build)
+├── docs/            # FRONTEND_PLAN.md (done) · BACKEND_PLAN.md (active)
 ├── AGENTS.md        # This file
 └── README.md        # Run instructions
 ```
@@ -121,6 +127,36 @@ Two-column experience:
 | POST   | `/api/v1/configurations/:id/save`     | Mark saved (server draft, optional)                     |
 | POST   | `/api/v1/configurations/:id/quote`    | Server-validated pricing                                |
 | POST   | `/api/v1/configurations/:id/checkout` | Create order draft (placeholder OK)                     |
+
+### PATCH body (client → server)
+
+Only these fields — never prices or computed totals:
+
+- `selections?: Record<string, number>`
+- `activeVariants?: Record<string, string>`
+- `openStepId?: string`
+
+See `client/src/sync/optimisticSync.ts` → `bundleStateToPatch`.
+
+### Error responses
+
+JSON body on all errors: `{ "message": "..." }`
+
+| Status | When                                                              |
+| ------ | ----------------------------------------------------------------- |
+| 404    | Configuration id not found (`bootBundle` expects `NotFoundError`) |
+| 400    | Zod validation failure                                            |
+| 500    | Unexpected server error                                           |
+
+---
+
+## Behavioral spec (tests are the contract)
+
+| Concern            | Implementation                            | Tests                                              |
+| ------------------ | ----------------------------------------- | -------------------------------------------------- |
+| API surface        | `client/src/api/implementations/local.ts` | `client/src/test/api/local.test.ts`                |
+| Product `requires` | `client/src/lib/productDependencies.ts`   | `client/src/test/lib/productDependencies.test.ts`  |
+| Server (to build)  | Mirror `local.ts`                         | Mirror client test scenarios in `server/src/test/` |
 
 ---
 
@@ -196,22 +232,28 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 
 ## Implementation order
 
-1. Types + `bundle.json` from Figma
-2. `api/client.ts` + `local.ts`
-3. Reducer + selectors + variant logic tests
-4. Desktop layout (builder + review panel)
-5. Interactions (accordion, steppers, variant sync)
-6. localStorage save/restore
-7. Responsive tablet + mobile
-8. Express + SQLite (same API contract)
-9. `http.ts` + flip `VITE_USE_API=true`
+1. ~~Types + `bundle.json` from Figma~~
+2. ~~`api/client.ts` + `local.ts`~~
+3. ~~Reducer + selectors + variant logic tests~~
+4. ~~Desktop layout (builder + review panel)~~
+5. ~~Interactions (accordion, steppers, variant sync)~~
+6. ~~localStorage save/restore~~
+7. ~~Responsive tablet + mobile~~
+8. Express + SQLite — [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md) slices 1–3
+9. `http.ts` + flip `VITE_USE_API=true` — slice 4
 
 ---
 
 ## How to continue in a new session
 
-Say: **"Continue the bundle builder — see AGENTS.md"** and specify FE or BE work.
+**Backend (current):**
 
-**Frontend docs:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) (phases) · [client/COMPONENTS.md](./client/COMPONENTS.md) (component reference)
+> Continue BE — slice N: \<goal\>. Mirror `local.ts`. See [docs/BACKEND_PLAN.md](./docs/BACKEND_PLAN.md).
+
+Example: _"Continue BE — slice 1: scaffold server + GET /api/v1/config."_
+
+**Frontend fixes only:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
+
+When creating `server/`, follow [`.cursor/rules/server-be.mdc`](./.cursor/rules/server-be.mdc).
 
 **Commits:** `<type>(<scope>): <subject>` + body — see [`.cursor/rules/git-commits.mdc`](./.cursor/rules/git-commits.mdc).
