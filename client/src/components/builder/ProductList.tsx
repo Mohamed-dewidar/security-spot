@@ -25,7 +25,7 @@ export function ProductList({
   onQuantityChange,
 }: ProductListProps) {
   return (
-    <ul className="flex flex-col gap-20 md:gap-24 lg:gap-25">
+    <ul className="flex flex-col gap-24 lg:gap-x-15 lg:flex-row lg:overflow-x-auto ">
       {products.map((product) => {
         const activeVariantId = getActiveVariantId(product);
         const quantity = getQuantity(product);

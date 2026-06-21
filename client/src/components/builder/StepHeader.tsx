@@ -1,11 +1,13 @@
 import { StepIcon } from "@/components/builder/StepIcon";
-import type { StepIconId } from "@/types/catalog";
+import type { BuilderStep, StepIconId } from "@/types/catalog";
 
 type StepHeaderProps = {
   icon: StepIconId;
   title: string;
   selectedCount: number;
   isOpen: boolean;
+  step: BuilderStep;
+  totalSteps: number;
   onToggle: () => void;
 };
 
@@ -27,28 +29,35 @@ function ChevronIcon({ isOpen }: { isOpen: boolean }) {
 export function StepHeader({
   icon,
   title,
+  step,
   selectedCount,
   isOpen,
+  totalSteps,
   onToggle,
 }: StepHeaderProps) {
   const selectedLabel =
     selectedCount === 1 ? "1 selected" : `${selectedCount} selected`;
 
   return (
-    <button
-      type="button"
-      aria-expanded={isOpen}
-      onClick={onToggle}
-      className="flex w-full min-h-11 items-center gap-12 border-b border-accordion-border py-15 text-left transition-colors hover:bg-gray-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:gap-16 md:py-16 lg:py-19"
-    >
-      <StepIcon icon={icon} className="size-20 md:size-24" />
-      <span className="min-w-0 flex-1 text-base font-semibold leading-snug text-obsidian md:text-lg">
-        {title}
-      </span>
-      <span className="shrink-0 text-sm font-medium leading-body tracking-body text-text-body">
-        {selectedLabel}
-      </span>
-      <ChevronIcon isOpen={isOpen} />
-    </button>
+    <div className="mt-13">
+      <p className="text-xs font-medium uppercase tracking-step-label text-text-muted">
+        Step {step.stepNumber} of {totalSteps}
+      </p>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        className="flex w-full min-h-11 items-center gap-8 border-b border-t border-accordion-border py-15 text-left transition-colors hover:bg-gray-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:py-16 lg:py-19"
+      >
+        <StepIcon icon={icon} />
+        <span className="min-w-0 flex-1 text-base font-semibold leading-snug text-obsidian md:text-lg">
+          {title}
+        </span>
+        <span className="shrink-0 text-sm font-medium leading-body tracking-body text-text-body">
+          {selectedLabel}
+        </span>
+        <ChevronIcon isOpen={isOpen} />
+      </button>
+    </div>
   );
 }

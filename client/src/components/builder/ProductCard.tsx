@@ -1,7 +1,6 @@
 import { VariantChips } from "@/components/builder/VariantChips";
-import { PriceBlock } from "@/components/shared/PriceBlock";
 import { QuantityStepper } from "@/components/shared/QuantityStepper";
-import type { PriceFormat } from "@/lib/formatPrice";
+import { formatPrice } from "@/lib/formatPrice";
 import type { Product } from "@/types/catalog";
 
 type ProductCardProps = {
@@ -26,12 +25,7 @@ function resolveImageUrl(
       return variant.imageUrl;
     }
   }
-
   return product.imageUrl;
-}
-
-function priceFormatForProduct(product: Product): PriceFormat {
-  return product.pricingUnit === "monthly" ? "monthly" : "unit";
 }
 
 export function ProductCard({
@@ -45,33 +39,45 @@ export function ProductCard({
 }: ProductCardProps) {
   const hasVariants = Boolean(product.variants?.length);
   const imageUrl = resolveImageUrl(product, activeVariantId);
-  const priceFormat = priceFormatForProduct(product);
+  const isSelected = quantity > 0;
+  const showCompareAt =
+    product.compareAtPrice !== undefined &&
+    product.compareAtPrice > product.price;
+  const isMonthly = product.pricingUnit === "monthly";
 
   return (
-    <article className="flex flex-col gap-15 border-b border-gray-300 pb-20 last:border-b-0 last:pb-0 md:flex-row md:items-start md:gap-20 lg:gap-24">
-      <div className="relative mx-auto w-full max-w-[11.25rem] shrink-0 md:mx-0 md:w-[11.25rem] lg:w-[12.5rem]">
+    <article
+      className={` h-full w-full lg:w-[224px] flex items-start gap-[19px] overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:flex-col lg:py-[15px] ${
+        isSelected ? "border-2 border-brand-border" : ""
+      }`}
+    >
+      {/* Image — portrait on mobile/tablet, landscape on desktop */}
+      <div className="relative h-[137px] w-[101px] shrink-0 overflow-hidden rounded-image lg:h-[117px] lg:w-[202px]">
         <img
           src={imageUrl}
           alt=""
-          className="aspect-square w-full rounded-image bg-gray-200 object-contain"
+          className="absolute inset-0 h-full w-full object-contain"
         />
         {product.badge ? (
-          <span className="absolute left-0 top-0 rounded-badge-sm bg-success px-8 py-4 text-2xs font-semibold uppercase tracking-section text-success">
+          <span className="absolute left-0 top-0 rounded-full bg-brand px-6 py-2 text-xs font-semibold text-on-brand">
             {product.badge.text}
           </span>
         ) : null}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-12 md:gap-13">
-        <div className="space-y-6">
-          <h3 className="text-lg font-semibold leading-snug text-obsidian md:text-xl">
+      {/* Content */}
+      <div className="flex min-w-0 flex-1 flex-col gap-[10px] lg:w-full lg:flex-none">
+        {/* Title + description */}
+        <div className="space-y-[8px]">
+          <h3 className="text-base font-semibold leading-snug tracking-body text-text lg:text-lg">
             {product.title}
           </h3>
-          <p className="text-sm leading-body tracking-body text-text-body md:text-base">
+          <p className="text-xs leading-body tracking-body text-text-body lg:text-sm">
             {product.description}
           </p>
         </div>
 
+        {/* Variant chips */}
         {hasVariants && product.variants ? (
           <VariantChips
             variants={product.variants}
@@ -80,19 +86,28 @@ export function ProductCard({
           />
         ) : null}
 
-        <div className="flex flex-wrap items-center justify-between gap-12 md:gap-16">
-          <PriceBlock
-            price={product.price}
-            compareAtPrice={product.compareAtPrice}
-            currency={currency}
-            format={priceFormat}
-          />
+        {/* Stepper (left) + price column (right) */}
+        <div className="flex w-full items-end gap-[10px]">
           <QuantityStepper
             value={quantity}
             min={minQuantity}
             onChange={onQuantityChange}
             ariaLabel={`${product.title} quantity`}
+            compact
           />
+
+          <div className="flex flex-1 flex-col items-end gap-[3px] text-right">
+            {showCompareAt ? (
+              <span className="text-base leading-none tracking-body text-sale line-through">
+                {formatPrice(product.compareAtPrice!, currency)}
+              </span>
+            ) : null}
+            <span className="text-base leading-none tracking-body text-gray-70">
+              {formatPrice(product.price, currency, {
+                format: isMonthly ? "monthly" : undefined,
+              })}
+            </span>
+          </div>
         </div>
       </div>
     </article>

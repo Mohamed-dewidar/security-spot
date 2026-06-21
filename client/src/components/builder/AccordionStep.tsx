@@ -40,6 +40,8 @@ export function AccordionStep({
         title={step.title}
         selectedCount={selectedCount}
         isOpen={false}
+        step={step}
+        totalSteps={totalSteps}
         onToggle={onToggle}
       />
     );
@@ -48,7 +50,7 @@ export function AccordionStep({
   return (
     <section
       aria-labelledby={`step-${step.id}-title`}
-      className="bg-step-bg px-15 py-20 md:px-20 md:py-24 lg:px-25 lg:py-25"
+      className="mt-13 bg-step-bg px-15 py-20 md:px-20 md:py-24 lg:px-25 lg:py-25"
     >
       <div className="min-w-0">
         <p className="text-xs font-medium uppercase tracking-step-label text-text-muted">

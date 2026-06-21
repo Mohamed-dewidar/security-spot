@@ -76,7 +76,7 @@ export function BuilderPanel() {
 
   return (
     <section aria-label="Bundle builder" className="min-w-0">
-      <div className="overflow-hidden rounded-card border border-gray-400 bg-surface">
+      <div className="overflow-hidden bg-surface">
         {catalog.steps.map((step) => {
           const isOpen = state.openStepId === step.id;
           const selectedCount = selectStepSelectedCount(
@@ -101,7 +101,7 @@ export function BuilderPanel() {
                 onQuantityChange={handleQuantityChange}
               />
               {isOpen && step.nextStepLabel ? (
-                <div className="border-t border-gray-300 bg-step-bg px-15 pb-20 md:px-20 md:pb-24 lg:px-25 lg:pb-25">
+                <div className="bg-step-bg pt-[15px] pb-[20px] flex items-center justify-center">
                   <NextStepButton
                     label={step.nextStepLabel}
                     onClick={handleNextStep}
