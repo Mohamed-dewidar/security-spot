@@ -1,4 +1,4 @@
-import { PriceBlock } from "@/components/shared/PriceBlock";
+import { ReviewPrice } from "@/components/review/ReviewPrice";
 import { QuantityStepper } from "@/components/shared/QuantityStepper";
 import type { PriceFormat } from "@/lib/formatPrice";
 
@@ -13,6 +13,7 @@ export type ReviewLineProps = {
   currency: string;
   priceFormat?: PriceFormat;
   minQuantity?: number;
+  showStepper?: boolean;
   onQuantityChange: (quantity: number) => void;
 };
 
@@ -27,44 +28,45 @@ export function ReviewLine({
   currency,
   priceFormat = "line",
   minQuantity = 0,
+  showStepper = true,
   onQuantityChange,
 }: ReviewLineProps) {
-  const displayLabel = variantLabel ? `${label} — ${variantLabel}` : label;
+  const ariaLabel = variantLabel ? `${label} — ${variantLabel}` : label;
 
   return (
     <li
       data-testid={`review-line-${lineKey}`}
       data-line-key={lineKey}
-      className="flex items-start gap-12 border-b border-gray-300 py-15 last:border-b-0 last:pb-0 md:gap-15 md:py-16"
+      className="flex items-start gap-16 lg:items-center"
     >
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt=""
-          className="size-15 shrink-0 rounded-image bg-gray-200 object-contain md:size-16"
-        />
-      ) : null}
+      <div className="flex min-w-0 flex-1 items-center gap-12">
+        {imageUrl ? (
+          <div className="relative size-[41px] shrink-0 overflow-hidden rounded-image bg-surface">
+            <img src={imageUrl} alt="" className="size-full object-contain" />
+          </div>
+        ) : null}
 
-      <div className="flex min-w-0 flex-1 flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-12">
-        <div className="min-w-0 space-y-4">
-          <p className="text-sm font-medium leading-snug text-obsidian md:text-base">
-            {displayLabel}
-          </p>
-          <PriceBlock
-            price={price}
-            compareAtPrice={compareAtPrice}
-            currency={currency}
-            format={priceFormat}
+        <p className="min-w-0 flex-1 text-xs font-medium leading-ui text-obsidian md:text-sm lg:text-lg">
+          {label}
+        </p>
+
+        {showStepper ? (
+          <QuantityStepper
+            value={quantity}
+            min={minQuantity}
+            onChange={onQuantityChange}
+            ariaLabel={`${ariaLabel} quantity`}
+            variant="review"
           />
-        </div>
-
-        <QuantityStepper
-          value={quantity}
-          min={minQuantity}
-          onChange={onQuantityChange}
-          ariaLabel={`${displayLabel} quantity`}
-        />
+        ) : null}
       </div>
+
+      <ReviewPrice
+        price={price}
+        compareAtPrice={compareAtPrice}
+        currency={currency}
+        format={priceFormat}
+      />
     </li>
   );
 }

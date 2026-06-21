@@ -4,6 +4,7 @@ import {
   ReviewGroup,
   type ReviewGroupLine,
 } from "@/components/review/ReviewGroup";
+import { ReviewShippingLine } from "@/components/review/ReviewShippingLine";
 import { ReviewTotals } from "@/components/review/ReviewTotals";
 import type { PriceFormat } from "@/lib/formatPrice";
 import { findProductInCatalog } from "@/lib/pricing";
@@ -100,6 +101,8 @@ export function ReviewPanel() {
         currency: totals.currency,
         priceFormat: priceFormatForLine(line),
         minQuantity: resolveMinQuantity(catalog, state.selections, line),
+        isPlan: group.id === "plan",
+        showStepper: group.id !== "plan",
       }));
     }
 
@@ -141,37 +144,60 @@ export function ReviewPanel() {
   }, [saveForLater, snapshotKey]);
 
   return (
-    <section className="rounded-card border border-gray-400 bg-surface p-15 md:p-20 lg:p-25">
-      <header className="space-y-8 border-b border-gray-300 pb-20 md:pb-24">
-        <h2 className="text-xl font-semibold leading-snug text-obsidian md:text-2xl">
-          {catalog.meta.reviewPanelTitle}
-        </h2>
-        <p className="text-sm leading-body tracking-body text-text-body md:text-base">
-          {catalog.meta.reviewPanelSubtitle}
-        </p>
-      </header>
+    <section className="rounded-card bg-step-bg pt-15">
+      <p className="px-15 text-2xs font-medium uppercase tracking-step-label text-text-muted md:px-20 md:text-xs lg:hidden">
+        Review
+      </p>
 
-      <div className="space-y-20 py-20 md:space-y-24 md:py-24">
-        {catalog.meta.reviewGroups.map((group) => (
-          <ReviewGroup
-            key={group.id}
-            title={group.title}
-            lines={groupLines[group.id]}
-            onQuantityChange={handleQuantityChange}
-          />
-        ))}
+      <div className="flex flex-col gap-10 px-20 py-20">
+        <div className="flex flex-col gap-20 lg:flex-row lg:items-start lg:justify-center lg:gap-52">
+          <div className="min-w-0 flex-1 space-y-10 lg:max-w-[552px]">
+            <header className="space-y-5 tracking-body">
+              <h2 className="text-2xl font-semibold leading-none text-text lg:text-3xl">
+                {catalog.meta.reviewPanelTitle}
+              </h2>
+              <p className="text-xs leading-body font-medium text-text-body md:text-sm lg:text-base">
+                {catalog.meta.reviewPanelSubtitle}
+              </p>
+            </header>
+
+            <div className="space-y-10">
+              {catalog.meta.reviewGroups.map((group) => (
+                <ReviewGroup
+                  key={group.id}
+                  title={group.title}
+                  className={
+                    group.id === "plan" ? "review-plan-group" : undefined
+                  }
+                  lines={groupLines[group.id]}
+                  onQuantityChange={handleQuantityChange}
+                />
+              ))}
+
+              <div className="border-t border-gray-400 pt-15">
+                <ReviewShippingLine
+                  label={catalog.meta.shipping.label}
+                  price={catalog.meta.shipping.price}
+                  compareAtPrice={catalog.meta.shipping.compareAtPrice}
+                  currency={totals.currency}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full space-y-8 lg:w-[486px] lg:shrink-0">
+            <ReviewTotals totals={totals} meta={catalog.meta} />
+            <ReviewActions
+              onCheckout={handleCheckout}
+              onSaveForLater={() => void handleSaveForLater()}
+              isSaving={isSaving}
+              saved={saved}
+              saveStatusMessage={saved ? saveFeedback : null}
+              saveErrorMessage={saveError}
+            />
+          </div>
+        </div>
       </div>
-
-      <ReviewTotals totals={totals} meta={catalog.meta} />
-
-      <ReviewActions
-        onCheckout={handleCheckout}
-        onSaveForLater={() => void handleSaveForLater()}
-        isSaving={isSaving}
-        saved={saved}
-        saveStatusMessage={saved ? saveFeedback : null}
-        saveErrorMessage={saveError}
-      />
     </section>
   );
 }

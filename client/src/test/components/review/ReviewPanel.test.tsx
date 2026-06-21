@@ -42,10 +42,10 @@ describe("ReviewPanel", () => {
     expect(
       screen.getByRole("heading", { name: "Cameras" }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Wyze Cam v4 — White")).toBeInTheDocument();
-    expect(screen.getByText("Wyze Cam Pan v3 — White")).toBeInTheDocument();
+    expect(screen.getByText("Wyze Cam v4")).toBeInTheDocument();
+    expect(screen.getByText("Wyze Cam Pan v3")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Plan" })).toBeInTheDocument();
-    expect(screen.getByText("Cam Unlimited")).toBeInTheDocument();
+    expect(screen.getByText("Unlimited")).toBeInTheDocument();
   });
 
   it("syncs review stepper changes with reducer state", () => {

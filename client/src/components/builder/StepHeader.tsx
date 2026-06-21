@@ -83,7 +83,7 @@ export function StepHeader({
 
   return (
     <div className="mt-13">
-      <p className="text-xs mb-5 font-medium uppercase tracking-step-label text-text-muted">
+      <p className="text-xs mb-5 px-15 font-medium uppercase tracking-step-label text-text-muted">
         Step {step.stepNumber} of {totalSteps}
       </p>
       {headerButton}

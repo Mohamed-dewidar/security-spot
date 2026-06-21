@@ -51,7 +51,7 @@ function App() {
       <div
         aria-busy="true"
         aria-live="polite"
-        className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface px-15 font-sans"
+        className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface  font-sans"
       >
         <p role="status" className="text-sm font-medium text-text-body">
           Loading your security system…

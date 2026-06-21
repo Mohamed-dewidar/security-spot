@@ -8,9 +8,10 @@ type QuantityStepperProps = {
   ariaLabel?: string;
   /**
    * compact — card-style stepper (no outer container border; smaller 20px
-   * buttons). Use on ProductCard. Default style is used in ReviewPanel.
+   * buttons). Use on ProductCard.
+   * review — review-panel stepper (white 20px buttons, 72px track).
    */
-  compact?: boolean;
+  variant?: "default" | "compact" | "review";
 };
 
 const defaultButtonClassName =
@@ -63,7 +64,7 @@ export function QuantityStepper({
   onChange,
   disabled = false,
   ariaLabel = "Quantity",
-  compact = false,
+  variant = "default",
 }: QuantityStepperProps) {
   const atMin = value <= min;
   const atMax = value >= max;
@@ -76,7 +77,49 @@ export function QuantityStepper({
     if (!atMax) onChange(value + 1);
   };
 
-  if (compact) {
+  if (variant === "review") {
+    const disabledButtonClassName =
+      "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control border border-gray-400 bg-stepper-disabled text-gray-600 transition-colors disabled:cursor-not-allowed";
+
+    const enabledButtonClassName =
+      "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control bg-surface text-obsidian transition-colors enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed";
+
+    return (
+      <div
+        role="group"
+        aria-label={ariaLabel}
+        className="inline-flex w-[72px] shrink-0 items-center justify-between py-4"
+      >
+        <button
+          type="button"
+          aria-label={`Decrease ${ariaLabel}`}
+          disabled={disabled || atMin}
+          onClick={decrement}
+          className={atMin ? disabledButtonClassName : enabledButtonClassName}
+        >
+          <CompactMinusIcon />
+        </button>
+        <span
+          aria-live="polite"
+          aria-atomic="true"
+          className="min-w-[8px] text-center text-sm font-semibold leading-ui text-obsidian tabular-nums"
+        >
+          {value}
+        </span>
+        <button
+          type="button"
+          aria-label={`Increase ${ariaLabel}`}
+          disabled={disabled || atMax}
+          onClick={increment}
+          className={enabledButtonClassName}
+        >
+          <CompactPlusIcon />
+        </button>
+      </div>
+    );
+  }
+
+  if (variant === "compact") {
     const minusButtonClassName = atMin
       ? "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control border-2 border-gray-300 bg-surface text-text transition-colors disabled:cursor-not-allowed disabled:opacity-40"
       : "inline-flex size-[20px] shrink-0 items-center justify-center rounded-control bg-gray-200 text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-300 enabled:active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-40";

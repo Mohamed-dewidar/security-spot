@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { ReviewTotals } from "@/components/review/ReviewTotals";
 
 const meta = {
-  shipping: { label: "Fast Shipping", price: 0, compareAtPrice: 5.99 },
   guarantee: {
     title: "30-day hassle-free returns",
     body: "If you're not totally in love with the product, we will refund you 100%.",
@@ -30,12 +29,9 @@ describe("ReviewTotals", () => {
       />,
     );
 
-    expect(screen.getByText("Fast Shipping")).toBeInTheDocument();
-    expect(screen.getByText("$0.00")).toBeInTheDocument();
-    expect(screen.getByText("$5.99")).toHaveClass("line-through");
-    expect(screen.getByText("30-day hassle-free returns")).toBeInTheDocument();
-    expect(screen.getByText("as low as $19.19/mo")).toBeInTheDocument();
-    expect(screen.getByText("$100.00")).toBeInTheDocument();
+    const compactTotals = screen.getByTestId("review-totals-compact");
+    expect(compactTotals).toHaveTextContent("as low as $19.19/mo");
+    expect(compactTotals).toHaveTextContent("$100.00");
     expect(
       screen.getByText("Congrats! You're saving $50 on your security bundle!"),
     ).toBeInTheDocument();

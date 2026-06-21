@@ -17,7 +17,7 @@ describe("ReviewLine", () => {
       />,
     );
 
-    expect(screen.getByText("Wyze Cam v4 — White")).toBeInTheDocument();
+    expect(screen.getByText("Wyze Cam v4")).toBeInTheDocument();
     expect(screen.getByText("$55.96")).toBeInTheDocument();
     expect(screen.getByText("2")).toBeInTheDocument();
   });

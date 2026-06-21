@@ -114,7 +114,7 @@ export function ProductCard({
             min={minQuantity}
             onChange={onQuantityChange}
             ariaLabel={`${product.title} quantity`}
-            compact
+            variant="compact"
           />
 
           <div className="flex min-w-0 flex-1 flex-col items-end gap-[3px] text-right text-base leading-none tracking-body lg:flex-row lg:items-center lg:justify-end">

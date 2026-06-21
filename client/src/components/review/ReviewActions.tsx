@@ -16,11 +16,11 @@ export function ReviewActions({
   saveErrorMessage,
 }: ReviewActionsProps) {
   return (
-    <div className="space-y-12 border-t border-gray-300 pt-20 md:space-y-13 md:pt-24">
+    <div className="space-y-8">
       <button
         type="button"
         onClick={onCheckout}
-        className="flex w-full min-h-11 items-center justify-center rounded-button bg-brand px-20 py-12 font-button text-base font-bold leading-ui text-on-brand transition-opacity hover:opacity-90 active:opacity-80 md:min-h-12 md:text-lg"
+        className="flex w-full items-center justify-center rounded-control bg-brand px-16 py-13 font-button text-md font-bold text-on-brand transition-opacity hover:opacity-90 active:opacity-80"
       >
         Checkout
       </button>
@@ -29,7 +29,7 @@ export function ReviewActions({
         type="button"
         onClick={onSaveForLater}
         disabled={isSaving}
-        className="flex w-full min-h-11 items-center justify-center rounded-button border border-brand-border bg-surface px-20 py-12 font-button text-base font-bold leading-ui text-brand transition-opacity enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 md:min-h-12 md:text-lg"
+        className="w-full text-center font-sans text-xs italic leading-snug tracking-tight text-text-muted underline transition-opacity enabled:cursor-pointer enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
       >
         {isSaving
           ? "Saving…"

@@ -32,7 +32,7 @@ describe("ReviewGroup", () => {
     expect(
       screen.getByRole("heading", { name: "Cameras" }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Wyze Cam v4 — White")).toBeInTheDocument();
+    expect(screen.getByText("Wyze Cam v4")).toBeInTheDocument();
   });
 
   it("forwards quantity changes with the line key", () => {
