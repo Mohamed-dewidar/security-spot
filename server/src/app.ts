@@ -1,9 +1,9 @@
 import cors from "cors";
-import express from "express";
+import express, { type Express } from "express";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { v1Router } from "./routes/v1/index.js";
 
-export function createApp() {
+export function createApp(): Express {
   const app = express();
 
   app.use(cors());

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type IRouter } from "express";
 import { getDb } from "../../db/index.js";
 import { asyncHandler } from "../../middleware/asyncHandler.js";
 import {
@@ -20,7 +20,7 @@ function routeParam(value: string | string[]): string {
   return Array.isArray(value) ? value[0] : value;
 }
 
-export const configurationsRouter = Router();
+export const configurationsRouter: IRouter = Router();
 
 configurationsRouter.post(
   "/configurations",
