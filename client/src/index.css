@@ -135,8 +135,7 @@
   /* Borders */
   --border-width-hairline: 0.5px;
 
-  /* Breakpoints: md = tablet (1:27), lg+ = desktop (1:342) */
-  --breakpoint-md: 48rem; /* 768px */
+  /* Breakpoints: default = responsive (1:658), lg = tablet (1:27), xl = desktop (1:342) */
   --breakpoint-lg: 64rem; /* 1024px */
   --breakpoint-xl: 80rem; /* 1280px */
 }

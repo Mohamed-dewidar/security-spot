@@ -12,24 +12,24 @@ export function ReviewTotals({ totals, meta }: ReviewTotalsProps) {
 
   return (
     <div className="space-y-16">
-      <div className="flex items-center justify-between gap-16 lg:items-center lg:gap-25">
+      <div className="flex items-center justify-between gap-16 xl:items-center xl:gap-25">
         <img
           src="/images/review/satisfaction-badge.png"
           alt=""
-          className="size-[78px] shrink-0 object-cover lg:size-[131px]"
+          className="size-[78px] shrink-0 object-cover xl:size-[131px]"
         />
 
-        <div className="hidden min-w-0 flex-1 lg:block">
+        <div className="hidden min-w-0 flex-1 xl:block">
           <p className="text-lg font-semibold leading-tight tracking-body text-text">
             {meta.guarantee.title}
           </p>
-          <p className="mt-11 lg:mt-20  text-lg leading-tight tracking-body text-text">
+          <p className="mt-11 text-lg leading-tight tracking-body text-text xl:mt-20">
             {meta.guarantee.body}
           </p>
         </div>
 
         <div
-          className="flex flex-col items-end justify-center gap-8 lg:hidden"
+          className="flex flex-col items-end justify-center gap-8 xl:hidden"
           data-testid="review-totals-compact"
         >
           <span className="rounded-badge-sm bg-brand px-8 py-5 text-xs leading-tight tracking-tight-sm text-on-brand">
@@ -49,7 +49,7 @@ export function ReviewTotals({ totals, meta }: ReviewTotalsProps) {
       </div>
 
       <div
-        className="hidden items-center justify-between gap-25 lg:flex"
+        className="hidden items-center justify-between gap-25 xl:flex"
         data-testid="review-totals-desktop"
       >
         <span className="rounded-badge-sm bg-brand px-8 py-8 text-base leading-tight tracking-tight-sm text-on-brand">
@@ -68,7 +68,7 @@ export function ReviewTotals({ totals, meta }: ReviewTotalsProps) {
       </div>
 
       {totals.savings > 0 ? (
-        <p className="pt-10 text-center text-xs font-semibold leading-none tracking-tight-sm text-success md:text-sm lg:text-sm">
+        <p className="pt-10 text-center text-xs font-semibold leading-none tracking-tight-sm text-success lg:text-sm">
           {totals.savingsMessage}
         </p>
       ) : null}

@@ -29,7 +29,7 @@ export function ReviewActions({
         type="button"
         onClick={onSaveForLater}
         disabled={isSaving}
-        className="w-full text-center font-sans text-xs italic leading-snug tracking-tight text-text-muted underline transition-opacity enabled:cursor-pointer enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+        className="w-full text-center font-sans text-xs italic leading-snug tracking-tight text-text-muted underline transition-opacity enabled:cursor-pointer enabled:hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 lg:text-sm"
       >
         {isSaving
           ? "Saving…"

@@ -63,10 +63,10 @@ function App() {
   if (status === "error" || !bootData) {
     return (
       <div className="mx-auto flex min-h-svh max-w-360 items-center justify-center bg-surface px-15 font-sans">
-        <div className="w-full max-w-md rounded-card border border-gray-400 bg-white p-20 text-center shadow-sm md:p-24">
+        <div className="w-full max-w-md rounded-card border border-gray-400 bg-white p-20 text-center shadow-sm lg:p-24">
           <p
             role="alert"
-            className="text-sm font-medium text-red-600 md:text-base"
+            className="text-sm font-medium text-red-600 lg:text-base"
           >
             {errorMessage ??
               "Something went wrong while loading the bundle builder."}
@@ -79,7 +79,7 @@ function App() {
               setStatus("loading");
               setRetryKey((current) => current + 1);
             }}
-            className="mt-16 inline-flex min-h-11 items-center justify-center rounded-button bg-brand px-20 py-12 font-button text-base font-bold leading-ui text-on-brand transition-opacity hover:opacity-90 active:opacity-80 md:min-h-12"
+            className="mt-16 inline-flex min-h-11 items-center justify-center rounded-button bg-brand px-20 py-12 font-button text-base font-bold leading-ui text-on-brand transition-opacity hover:opacity-90 active:opacity-80 lg:min-h-12"
           >
             Try again
           </button>

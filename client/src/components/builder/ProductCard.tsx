@@ -57,15 +57,13 @@ export function ProductCard({
 
   return (
     <article
-      className={`flex gap-[19px] h-full w-full items-start overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:w-[224px] lg:min-h-[330px] lg:flex-col lg:justify-start ${
+      className={`flex h-full w-full flex-col items-start gap-[19px] overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:flex-row lg:items-center xl:min-h-[330px] xl:flex-col xl:items-center xl:justify-start ${
         isSelected
-          ? " outline-2 outline-brand-border lg:py-[15px]"
+          ? "outline-2 outline-brand-border xl:py-[15px]"
           : "outline-none"
       }`}
     >
-      <div
-        className={`relative shrink-0 overflow-hidden rounded-image h-[137px] w-[101px] lg:h-[120px] lg:w-[202px] `}
-      >
+      <div className="relative h-[120px] w-full shrink-0 overflow-hidden rounded-image lg:h-[137px] lg:w-[101px] xl:h-[120px] xl:w-full">
         <img
           src={imageUrl}
           alt=""
@@ -78,18 +76,18 @@ export function ProductCard({
         ) : null}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col justify-between gap-[10px] lg:w-full lg:flex-none">
+      <div className="flex w-full flex-1 flex-col justify-start gap-[10px] xl:w-full ">
         <div className="flex flex-col gap-[8px]">
           <h3
-            className={`font-semibold leading-none tracking-body text-text ${
-              isSelected ? "text-base lg:text-lg" : "text-base"
+            className={`text-base font-semibold leading-none tracking-body text-text ${
+              isSelected ? "xl:text-lg" : ""
             }`}
           >
             {product.title}
           </h3>
           <p
-            className={`font-medium leading-body tracking-body text-text-body ${
-              isSelected ? "text-xs lg:text-sm" : "text-xs"
+            className={`text-xs font-medium leading-body tracking-body text-text-body ${
+              isSelected ? "xl:text-sm" : ""
             }`}
           >
             <span>{product.description} </span>
@@ -104,11 +102,7 @@ export function ProductCard({
 
         {variantChips}
 
-        <div
-          className={`flex w-full items-end ${
-            isSelected ? "gap-[10px]" : "gap-[46px]"
-          }`}
-        >
+        <div className={`mt-auto flex w-full items-center justify-between `}>
           <QuantityStepper
             value={quantity}
             min={minQuantity}
@@ -117,7 +111,7 @@ export function ProductCard({
             variant="compact"
           />
 
-          <div className="flex min-w-0 flex-1 flex-col items-end gap-[3px] text-right text-base leading-none tracking-body lg:flex-row lg:items-center lg:justify-end">
+          <div className="flex min-w-0 flex-1 flex-col items-end gap-[3px] text-right text-base leading-none tracking-body xl:flex-row xl:items-center xl:justify-end">
             {showCompareAt ? (
               <span className="shrink-0 text-sale line-through">
                 {formatPrice(product.compareAtPrice!, currency)}

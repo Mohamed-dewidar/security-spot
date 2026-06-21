@@ -51,10 +51,10 @@ export function StepHeader({
           : "flex w-full min-h-11 items-center gap-8 border-b border-t border-accordion-border py-20 px-15 text-left transition-colors hover:bg-gray-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand "
       }
     >
-      <StepIcon icon={icon} />
+      <StepIcon icon={icon} className="size-20 lg:size-[26px] xl:size-[30px]" />
       <span
         id={titleId}
-        className={`text-lg md:text-2xl lg:text-3xl ${
+        className={`text-lg lg:text-2xl xl:text-3xl ${
           isExpanded
             ? "min-w-0 flex-1  font-semibold leading-none text-obsidian"
             : "min-w-0 flex-1  font-semibold leading-snug text-obsidian "
@@ -83,7 +83,7 @@ export function StepHeader({
 
   return (
     <div className="mt-13">
-      <p className="text-xs mb-5 px-15 font-medium uppercase tracking-step-label text-text-muted">
+      <p className="text-2xs mb-5 px-15 font-medium uppercase tracking-step-label text-text-muted lg:text-xs">
         Step {step.stepNumber} of {totalSteps}
       </p>
       {headerButton}

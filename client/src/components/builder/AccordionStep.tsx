@@ -59,7 +59,7 @@ export function AccordionStep({
       aria-labelledby={titleId}
       className="mt-13 overflow-hidden rounded-card bg-step-bg pt-15"
     >
-      <p className="px-15 mb-5 text-xs font-medium uppercase tracking-step-label text-text-muted">
+      <p className="text-2xs mb-5 px-15 font-medium uppercase tracking-step-label text-text-muted lg:text-xs">
         Step {step.stepNumber} of {totalSteps}
       </p>
 

@@ -145,18 +145,18 @@ export function ReviewPanel() {
 
   return (
     <section className="rounded-card bg-step-bg pt-15">
-      <p className="px-15 text-2xs font-medium uppercase tracking-step-label text-text-muted md:px-20 md:text-xs lg:hidden">
+      <p className="px-15 text-2xs font-medium uppercase tracking-step-label text-text-muted lg:text-xs xl:hidden">
         Review
       </p>
 
       <div className="flex flex-col gap-10 px-20 py-20">
-        <div className="flex flex-col gap-20 lg:flex-row lg:items-start lg:justify-center lg:gap-52">
-          <div className="min-w-0 flex-1 space-y-10 lg:max-w-[552px]">
+        <div className="flex flex-col gap-20 xl:flex-row xl:items-start xl:justify-center xl:gap-52">
+          <div className="min-w-0 flex-1 space-y-10 xl:max-w-[552px]">
             <header className="space-y-5 tracking-body">
-              <h2 className="text-2xl font-semibold leading-none text-text lg:text-3xl">
+              <h2 className="text-2xl font-semibold leading-none text-text xl:text-3xl">
                 {catalog.meta.reviewPanelTitle}
               </h2>
-              <p className="text-xs leading-body font-medium text-text-body md:text-sm lg:text-base">
+              <p className="text-xs leading-body font-medium text-text-body lg:text-sm xl:text-base">
                 {catalog.meta.reviewPanelSubtitle}
               </p>
             </header>
@@ -185,7 +185,7 @@ export function ReviewPanel() {
             </div>
           </div>
 
-          <div className="w-full space-y-8 lg:w-[486px] lg:shrink-0">
+          <div className="w-full space-y-8 xl:w-[486px] xl:shrink-0">
             <ReviewTotals totals={totals} meta={catalog.meta} />
             <ReviewActions
               onCheckout={handleCheckout}

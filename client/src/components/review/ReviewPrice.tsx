@@ -28,13 +28,13 @@ export function ReviewPrice({
   const showCompareAt = compareAtPrice !== undefined && compareAtPrice > price;
 
   return (
-    <div className="flex shrink-0 flex-col items-end gap-0 lg:flex-row lg:items-center lg:gap-10">
+    <div className="flex shrink-0 flex-col items-end gap-0 xl:flex-row xl:items-center xl:gap-10">
       {showCompareAt ? (
-        <span className="text-sm font-medium leading-ui text-gray-600 line-through md:text-base">
+        <span className="text-sm font-medium leading-ui text-gray-600 line-through xl:text-base">
           {formatPrice(compareAtPrice, currency, { format })}
         </span>
       ) : null}
-      <span className="text-sm font-semibold leading-ui text-brand md:text-base">
+      <span className="text-sm font-semibold leading-ui text-brand xl:text-base">
         {formatReviewAmount(price, currency, format)}
       </span>
     </div>

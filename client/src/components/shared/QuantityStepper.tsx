@@ -15,7 +15,7 @@ type QuantityStepperProps = {
 };
 
 const defaultButtonClassName =
-  "inline-flex shrink-0 items-center justify-center border-0 bg-transparent text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 disabled:bg-stepper-disabled min-h-11 min-w-11 text-base leading-stepper md:min-h-9 md:min-w-9 md:text-sm";
+  "inline-flex shrink-0 items-center justify-center border-0 bg-transparent text-text transition-colors enabled:cursor-pointer enabled:hover:bg-gray-200 enabled:active:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500 disabled:bg-stepper-disabled min-h-11 min-w-11 text-base leading-stepper lg:min-h-9 lg:min-w-9 lg:text-sm";
 
 function CompactMinusIcon() {
   return (
@@ -177,7 +177,7 @@ export function QuantityStepper({
       <span
         aria-live="polite"
         aria-atomic="true"
-        className="flex min-w-11 items-center justify-center border-r border-gray-400 px-8 text-base font-medium leading-stepper text-text tabular-nums md:min-w-9 md:px-6 md:text-sm"
+        className="flex min-w-11 items-center justify-center border-r border-gray-400 px-8 text-base font-medium leading-stepper text-text tabular-nums lg:min-w-9 lg:px-6 lg:text-sm"
       >
         {value}
       </span>

@@ -37,7 +37,7 @@ export function ReviewLine({
     <li
       data-testid={`review-line-${lineKey}`}
       data-line-key={lineKey}
-      className="flex items-start gap-16 lg:items-center"
+      className="flex items-start gap-16 xl:items-center"
     >
       <div className="flex min-w-0 flex-1 items-center gap-12">
         {imageUrl ? (
@@ -46,7 +46,7 @@ export function ReviewLine({
           </div>
         ) : null}
 
-        <p className="min-w-0 flex-1 text-xs font-medium leading-ui text-obsidian md:text-sm lg:text-lg">
+        <p className="min-w-0 flex-1 text-xs font-medium leading-ui text-obsidian lg:text-sm xl:text-lg">
           {label}
         </p>
 

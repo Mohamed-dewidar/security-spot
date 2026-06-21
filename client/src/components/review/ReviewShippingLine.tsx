@@ -23,7 +23,7 @@ export function ReviewShippingLine({
             className="size-[29px] object-contain"
           />
         </div>
-        <p className="min-w-0 flex-1 text-xs font-medium leading-ui text-obsidian md:text-sm lg:text-lg">
+        <p className="min-w-0 flex-1 text-xs font-medium leading-ui text-obsidian lg:text-sm xl:text-lg">
           {label}
         </p>
       </div>

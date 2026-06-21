@@ -25,14 +25,17 @@ export function ProductList({
   onQuantityChange,
 }: ProductListProps) {
   return (
-    <ul className="flex flex-col gap-24 lg:gap-x-15 lg:flex-row lg:overflow-x-auto p-1">
+    <ul className="flex flex-col gap-24 p-1 lg:grid lg:grid-cols-2 lg:gap-15 xl:flex xl:flex-row xl:items-stretch xl:gap-15">
       {products.map((product) => {
         const activeVariantId = getActiveVariantId(product);
         const quantity = getQuantity(product);
         const minQuantity = getMinQuantity(product);
 
         return (
-          <li key={product.id}>
+          <li
+            key={product.id}
+            className="min-w-0 last:odd:lg:col-span-2 last:odd:lg:max-w-[360px] last:odd:lg:justify-self-center xl:col-span-auto xl:max-w-none xl:flex-1 xl:justify-self-auto"
+          >
             <ProductCard
               product={product}
               currency={currency}

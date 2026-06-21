@@ -26,9 +26,9 @@ export function ReviewPlanLine({
         <img
           src="/images/review/wyze-plan-logo.png"
           alt=""
-          className="h-[17px] w-[14px] shrink-0 object-contain md:h-[24px] md:w-[20px] lg:h-[31px] lg:w-[26px]"
+          className="h-[17px] w-[14px] shrink-0 object-contain lg:h-[24px] lg:w-[20px] xl:h-[31px] xl:w-[26px]"
         />
-        <p className="text-sm font-bold leading-none tracking-tight text-text md:text-base lg:text-xl">
+        <p className="text-sm font-bold leading-none tracking-tight text-text lg:text-base xl:text-xl">
           <span>Cam </span>
           <span className="text-brand">Unlimited</span>
         </p>

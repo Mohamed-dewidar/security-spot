@@ -8,15 +8,15 @@ type PriceBlockProps = {
 };
 
 const priceSizeByFormat: Record<PriceFormat, string> = {
-  unit: "text-lg font-semibold md:text-xl",
-  line: "text-base font-semibold md:text-lg",
-  monthly: "text-lg font-semibold md:text-xl",
+  unit: "text-lg font-semibold xl:text-xl",
+  line: "text-base font-semibold xl:text-lg",
+  monthly: "text-lg font-semibold xl:text-xl",
 };
 
 const compareSizeByFormat: Record<PriceFormat, string> = {
-  unit: "text-sm md:text-base",
-  line: "text-xs md:text-sm",
-  monthly: "text-sm md:text-base",
+  unit: "text-sm xl:text-base",
+  line: "text-xs xl:text-sm",
+  monthly: "text-sm xl:text-base",
 };
 
 export function PriceBlock({
