@@ -1,0 +1,7 @@
+node_modules
+dist
+data/bundle.db
+data/bundle.db-wal
+data/bundle.db-shm
+.env
+.env.*

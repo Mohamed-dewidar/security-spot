@@ -95,7 +95,7 @@ export function BuilderPanel() {
               isOpen={isOpen}
               selectedCount={selectedCount}
               currency={catalog.meta.currency}
-              nextStepLabel={step.nextStepLabel}
+              nextStepLabel={step.nextStepLabel ?? undefined}
               getActiveVariantId={getActiveVariantId}
               getQuantity={getQuantity}
               getMinQuantity={getMinQuantity}

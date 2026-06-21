@@ -248,7 +248,7 @@ VITE_API_URL=http://localhost:3001/api/v1 # full API base when using http.ts
 
 ## How to continue in a new session
 
-**Full-stack dev:** see [README.md](./README.md) — start `server` on port 3001, set `VITE_USE_API=true` in `client/.env`, then `pnpm dev` in `client/`.
+**Full-stack dev:** see [README.md](./README.md) — start `server` on port 3001, set `VITE_USE_API=true` in `client/.env`, then `pnpm dev` in `client/`. Or run `docker compose up --build` for a containerized full stack (optional).
 
 **Frontend fixes:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
 

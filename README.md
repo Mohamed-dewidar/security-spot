@@ -70,6 +70,27 @@ pnpm test
 
 ---
 
+## Docker (optional — full stack)
+
+**Requirements:** [Docker](https://docs.docker.com/get-docker/) with Compose
+
+One-command full stack (Express API + production-built client). For frontend-only review without Docker, use **Quick start** above.
+
+```bash
+docker compose up --build
+```
+
+- App: **http://localhost:5173**
+- API health: `curl http://localhost:3001/api/v1/health` → `{"ok":true}`
+
+The client is built with `VITE_USE_API=true` and talks to Express at `http://localhost:3001/api/v1` from the browser. SQLite data persists in `server/data/`. Save-for-later still uses **localStorage**.
+
+```bash
+docker compose down    # stop containers
+```
+
+---
+
 **Agent / contributor guide:** [AGENTS.md](./AGENTS.md) · **Frontend plan & components:** [docs/FRONTEND_PLAN.md](./docs/FRONTEND_PLAN.md) · [client/COMPONENTS.md](./client/COMPONENTS.md)
 
 ## Stack
@@ -84,10 +105,11 @@ Default reviewer flow is **frontend-only** (`local.ts`). Set `VITE_USE_API=true`
 ## Project structure
 
 ```
-├── client/     # React app
-├── server/     # Express API + SQLite
-├── docs/       # Implementation plans
-└── AGENTS.md   # Architecture & progress tracker
+├── client/            # React app
+├── server/            # Express API + SQLite
+├── docs/              # Implementation plans
+├── docker-compose.yml # Optional full-stack via Docker
+└── AGENTS.md          # Architecture & progress tracker
 ```
 
 ## Configuration (optional)
