@@ -14,7 +14,7 @@ EcomExperts take-home. Full context: `AGENTS.md` at repo root.
 
 ## Phase
 
-FE first via `api/client.ts` + `local.ts`. BE later — flip `VITE_USE_API=true`. Will not break FE if contract holds.
+FE complete. **BE next** — see `docs/BACKEND_PLAN.md`. Flip `VITE_USE_API=true` when Express is ready.
 
 ## Rules
 

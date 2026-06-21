@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Server (BE) Conventions
 
-See `AGENTS.md` for full spec. **No JSON Server** — Express + SQLite only.
+See `AGENTS.md` for full spec and [docs/BACKEND_PLAN.md](../docs/BACKEND_PLAN.md) for implementation slices. **No JSON Server** — Express + SQLite only.
 
 ## Stack
 
@@ -45,6 +45,10 @@ Implement exact routes from `AGENTS.md`. Response shapes must match `server/src/
 
 - Port 3001; client proxies `/api` via Vite
 - Same port/URLs so FE needs zero changes when switching from local.ts
+
+## Errors
+
+JSON body: `{ "message": "..." }`. Return 404 for missing configuration (client `bootBundle` expects `NotFoundError`), 400 for Zod failures.
 
 ## Documentation
 

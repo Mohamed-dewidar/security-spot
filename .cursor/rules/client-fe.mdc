@@ -16,7 +16,7 @@ React + TypeScript + Tailwind + Vite.
 
 - Single entry: `client/src/api/client.ts`
 - Phase 1: `implementations/local.ts` (`VITE_USE_API=false`)
-- Phase 2: `implementations/http.ts` (`VITE_USE_API=true`)
+- Phase 2: `implementations/http.ts` (`VITE_USE_API=true`, `VITE_API_URL` full base URL)
 - Never `import bundle.json` in components
 
 ## State

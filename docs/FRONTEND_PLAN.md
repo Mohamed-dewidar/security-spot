@@ -2,7 +2,7 @@
 
 Implementation plan for the EcomExperts take-home frontend in [`client/`](../client/). See also [AGENTS.md](../AGENTS.md), [client/COMPONENTS.md](../client/COMPONENTS.md), and [`.cursor/rules/client-fe.mdc`](../.cursor/rules/client-fe.mdc).
 
-**Current state:** Vite + React 19 + TS scaffold only. No Tailwind, no business logic, no `server/`.
+**Current state:** Frontend MVP complete (responsive at 3 breakpoints, tests passing, `VITE_USE_API=false`). Backend not started — see [BACKEND_PLAN.md](./BACKEND_PLAN.md).
 
 ## Principles
 
@@ -286,7 +286,7 @@ When `server/` exists:
 
 - Align types with `server/src/types/`
 - Implement `http.ts`
-- Vite proxy `/api/v1/*`
+- Implement `http.ts` with `VITE_API_URL=http://localhost:3001/api/v1`
 - Flip `VITE_USE_API=true`
 - Server-authoritative quote/checkout
 
@@ -294,12 +294,12 @@ When `server/` exists:
 
 ## Definition of done (frontend MVP)
 
-- [ ] All components implemented and responsive at 3 breakpoints
-- [ ] Variant qty rules pass tests
-- [ ] Review synced with builder
-- [ ] Save for later via localStorage
-- [ ] No component imports `bundle.json`
-- [ ] Works with `VITE_USE_API=false` without server
+- [x] All components implemented and responsive at 3 breakpoints
+- [x] Variant qty rules pass tests
+- [x] Review synced with builder
+- [x] Save for later via localStorage
+- [x] No component imports `bundle.json`
+- [x] Works with `VITE_USE_API=false` without server
 
 ## Out of scope for v1
 
@@ -327,4 +327,7 @@ Check off items in [AGENTS.md](../AGENTS.md) **Current phase** section as work c
 
 ## How to continue in a new session
 
-> Continue the bundle builder — see `AGENTS.md` and `docs/FRONTEND_PLAN.md`. Start Phase N.
+Frontend work is complete. For new sessions:
+
+- **Backend:** see [BACKEND_PLAN.md](./BACKEND_PLAN.md)
+- **Frontend fixes only:** see [client/COMPONENTS.md](../client/COMPONENTS.md) and `AGENTS.md`
