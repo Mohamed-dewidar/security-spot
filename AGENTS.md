@@ -35,11 +35,11 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] Builder UI (accordion, product cards, variants, steppers)
 - [x] Review panel (grouped lines, synced steppers, totals)
 - [x] localStorage save/restore ("Save my system for later")
-- [ ] Responsive (tablet → mobile)
+- [x] Responsive (tablet → mobile)
 - [ ] `server/` Express + TS + SQLite
-- [ ] `client/src/api/implementations/http.ts` + `VITE_USE_API=true`
+- [ ] `client/src/api/implementations/http.ts` + `VITE_USE_API=true` (stub exists; needs Express)
 - [ ] Quote + checkout endpoints
-- [ ] Root README run instructions + polish
+- [x] Root README run instructions + polish
 
 ---
 
