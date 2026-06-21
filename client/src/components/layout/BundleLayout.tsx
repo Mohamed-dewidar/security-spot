@@ -7,7 +7,7 @@ type BundleLayoutProps = {
 
 export function BundleLayout({ builder, review }: BundleLayoutProps) {
   return (
-    <div className="mx-auto min-h-svh w-full max-w-360 bg-surface font-sans lg:px-20 lg:py-25">
+    <div className="mx-auto min-h-svh w-full max-w-7xl bg-surface font-sans lg:px-20 lg:py-[62px]">
       <div className="flex flex-col gap-20 lg:flex-row lg:items-start lg:gap-16 xl:flex-col xl:gap-13">
         <h1 className="mt-[31px] text-center text-[32px] font-bold lg:hidden">
           Let’s get started!

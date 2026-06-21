@@ -57,7 +57,7 @@ export function ProductCard({
 
   return (
     <article
-      className={`flex h-full w-full flex-col items-start gap-[19px] overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:flex-row lg:items-center xl:min-h-[330px] xl:flex-col xl:items-center xl:justify-start ${
+      className={`flex h-full w-full flex-col items-start gap-[19px] overflow-hidden rounded-card bg-surface p-[11px] transition-colors lg:flex-row lg:items-center xl:min-h-[330px] xl:w-[224px] xl:flex-col xl:items-center xl:justify-start ${
         isSelected
           ? "outline-2 outline-brand-border xl:py-[15px]"
           : "outline-none"

@@ -2,6 +2,7 @@ import bundleData from "@/data/bundle.json";
 import { NotFoundError } from "@/api/errors";
 import type { BundleApi } from "@/api/types";
 import { normalizeSelections } from "@/lib/productDependencies";
+import { resolveOpenStepId } from "@/lib/openStep";
 import { parseSelectionKey } from "@/state/keys";
 import type { BundleConfig, Product } from "@/types/catalog";
 import type { CheckoutResult, Quote, QuoteLine } from "@/types/api";
@@ -142,7 +143,9 @@ function applyPatch(
 ): Configuration {
   return {
     ...config,
-    ...(patch.openStepId !== undefined ? { openStepId: patch.openStepId } : {}),
+    ...(patch.openStepId !== undefined
+      ? { openStepId: resolveOpenStepId(catalog, patch.openStepId) }
+      : {}),
     ...(patch.selections !== undefined
       ? { selections: { ...config.selections, ...patch.selections } }
       : {}),
@@ -159,7 +162,10 @@ function resolveCreateInput(
   input: CreateConfigurationInput = {},
 ): Pick<Configuration, "selections" | "activeVariants" | "openStepId"> {
   return {
-    openStepId: input.openStepId ?? catalog.initialSelections.openStepId,
+    openStepId: resolveOpenStepId(
+      catalog,
+      input.openStepId ?? catalog.initialSelections.openStepId,
+    ),
     selections: normalizeSelections(catalog, {
       ...catalog.initialSelections.selections,
       ...input.selections,

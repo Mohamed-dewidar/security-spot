@@ -2,6 +2,7 @@ import {
   applySetQuantity,
   normalizeSelections,
 } from "@/lib/productDependencies";
+import { resolveOpenStepId } from "@/lib/openStep";
 import type { BundleConfig } from "@/types/catalog";
 import type {
   ActiveVariants,
@@ -42,7 +43,7 @@ export function createInitialState(
   return {
     selections: normalizeSelections(catalog, configuration.selections),
     activeVariants: { ...configuration.activeVariants },
-    openStepId: configuration.openStepId,
+    openStepId: resolveOpenStepId(catalog, configuration.openStepId),
   };
 }
 
@@ -80,7 +81,7 @@ export function bundleReducer(
 
     case "HYDRATE":
       return {
-        openStepId: action.payload.openStepId,
+        openStepId: resolveOpenStepId(catalog, action.payload.openStepId),
         selections: normalizeSelections(catalog, action.payload.selections),
         activeVariants: { ...action.payload.activeVariants },
       };
