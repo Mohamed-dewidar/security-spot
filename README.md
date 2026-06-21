@@ -53,11 +53,11 @@ Verify: `curl http://localhost:3001/api/v1/health` → `{"ok":true}`
 ```bash
 cd client
 cp .env.example .env   # if you don't have .env yet
-# Set VITE_USE_API=true in .env
+# Set VITE_USE_API=true and VITE_API_URL=http://localhost:3001/api/v1 in .env
 pnpm dev
 ```
 
-Open **http://localhost:5173**. Vite proxies `/api` to the Express server during dev — no CORS setup needed.
+Open **http://localhost:5173**. The client calls Express directly at `VITE_API_URL` (CORS is enabled on the server).
 
 With `VITE_USE_API=true`, configuration changes debounce to `PATCH /api/v1/configurations/:id`. Save-for-later still uses **localStorage**; the server validates configuration ids on restore.
 
@@ -98,7 +98,7 @@ Copy the example env file if you want to override defaults:
 cp client/.env.example client/.env
 ```
 
-See [client/.env.example](./client/.env.example) for variable descriptions. No `.env` is required for the default local setup.
+See [client/.env.example](./client/.env.example) for variable descriptions (`VITE_USE_API`, `VITE_API_URL`). No `.env` is required for the default local setup.
 
 ## Design
 

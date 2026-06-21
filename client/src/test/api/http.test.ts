@@ -3,13 +3,20 @@ import { ApiError, NotFoundError } from "@/api/errors";
 import { httpApi } from "@/api/implementations/http";
 
 const mockFetch = vi.fn();
+const TEST_API_BASE = "http://localhost:3001/api/v1";
+
+function apiUrl(path: string): string {
+  return `${TEST_API_BASE}${path}`;
+}
 
 beforeEach(() => {
   vi.stubGlobal("fetch", mockFetch);
+  vi.stubEnv("VITE_API_URL", TEST_API_BASE);
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
   mockFetch.mockReset();
 });
 
@@ -21,13 +28,13 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 describe("httpApi.getConfig", () => {
-  it("fetches catalog from /api/v1/config", async () => {
+  it("fetches catalog from the configured API base", async () => {
     const catalog = { meta: { currency: "USD" }, steps: [] };
     mockFetch.mockResolvedValue(jsonResponse(catalog));
 
     const result = await httpApi.getConfig();
 
-    expect(mockFetch).toHaveBeenCalledWith("/api/v1/config", {
+    expect(mockFetch).toHaveBeenCalledWith(apiUrl("/config"), {
       headers: new Headers(),
     });
     expect(result).toEqual(catalog);
@@ -35,7 +42,7 @@ describe("httpApi.getConfig", () => {
 });
 
 describe("httpApi.createConfiguration", () => {
-  it("POSTs optional input to /api/v1/configurations", async () => {
+  it("POSTs optional input to /configurations", async () => {
     const configuration = { id: "cfg-1", selections: {}, activeVariants: {} };
     mockFetch.mockResolvedValue(jsonResponse(configuration, 201));
 
@@ -44,7 +51,7 @@ describe("httpApi.createConfiguration", () => {
       selections: { "wyze-cam-v4:black": 2 },
     });
 
-    expect(mockFetch).toHaveBeenCalledWith("/api/v1/configurations", {
+    expect(mockFetch).toHaveBeenCalledWith(apiUrl("/configurations"), {
       method: "POST",
       body: JSON.stringify({
         openStepId: "plan",
@@ -65,7 +72,7 @@ describe("httpApi.getConfiguration", () => {
     await expect(httpApi.getConfiguration("missing")).rejects.toBeInstanceOf(
       NotFoundError,
     );
-    expect(mockFetch).toHaveBeenCalledWith("/api/v1/configurations/missing", {
+    expect(mockFetch).toHaveBeenCalledWith(apiUrl("/configurations/missing"), {
       headers: new Headers(),
     });
   });
@@ -83,7 +90,7 @@ describe("httpApi.patchConfiguration", () => {
       selections: { "wyze-cam-v4:white": 3 },
     });
 
-    expect(mockFetch).toHaveBeenCalledWith("/api/v1/configurations/cfg-1", {
+    expect(mockFetch).toHaveBeenCalledWith(apiUrl("/configurations/cfg-1"), {
       method: "PATCH",
       body: JSON.stringify({ selections: { "wyze-cam-v4:white": 3 } }),
       headers: new Headers({ "Content-Type": "application/json" }),
@@ -100,7 +107,7 @@ describe("httpApi.saveConfiguration", () => {
     await httpApi.saveConfiguration("cfg-1");
 
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/v1/configurations/cfg-1/save",
+      apiUrl("/configurations/cfg-1/save"),
       {
         method: "POST",
         headers: new Headers(),
@@ -117,7 +124,7 @@ describe("httpApi.quote", () => {
     const result = await httpApi.quote("cfg-1");
 
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/v1/configurations/cfg-1/quote",
+      apiUrl("/configurations/cfg-1/quote"),
       {
         method: "POST",
         headers: new Headers(),

@@ -1,6 +1,5 @@
+import { getApiBase } from "@/api/apiBase";
 import { ApiError, NotFoundError } from "@/api/errors";
-
-const API_BASE = "/api/v1";
 
 type ErrorBody = {
   message?: string;
@@ -19,7 +18,7 @@ async function parseErrorMessage(response: Response): Promise<string> {
   return response.statusText || `Request failed with status ${response.status}`;
 }
 
-/** fetch wrapper for `/api/v1/*` — maps 404 to {@link NotFoundError}. */
+/** fetch wrapper for API routes — maps 404 to {@link NotFoundError}. */
 export async function fetchJson<T>(
   path: string,
   init?: RequestInit,
@@ -29,7 +28,7 @@ export async function fetchJson<T>(
     headers.set("Content-Type", "application/json");
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(`${getApiBase()}${path}`, {
     ...init,
     headers,
   });

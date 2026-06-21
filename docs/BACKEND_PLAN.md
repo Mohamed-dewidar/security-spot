@@ -53,9 +53,8 @@ Build in order; each slice should be runnable and testable before the next.
 
 ### Slice 4 — Client hookup
 
-- [ ] Implement [`client/src/api/implementations/http.ts`](../client/src/api/implementations/http.ts) (`fetch` to `/api/v1/*`, map errors to `ApiError` / `NotFoundError`)
-- [ ] Vite proxy in [`client/vite.config.ts`](../client/vite.config.ts): `/api` → `http://localhost:3001`
-- [ ] Set `VITE_USE_API=true` in `client/.env` and verify full app boot + debounced PATCH
+- [ ] Implement [`client/src/api/implementations/http.ts`](../client/src/api/implementations/http.ts) (`fetch` to `VITE_API_URL`, map errors to `ApiError` / `NotFoundError`)
+- [ ] Set `VITE_USE_API=true` and `VITE_API_URL=http://localhost:3001/api/v1` in `client/.env`; verify full app boot + debounced PATCH
 
 **Done when:** app works end-to-end with both terminals running (see Verification below).
 

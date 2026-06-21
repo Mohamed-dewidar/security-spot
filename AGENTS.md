@@ -44,7 +44,7 @@ Build desktop first for pixel fidelity, then tablet, then mobile. Do not shrink 
 - [x] **BE slice 1:** server scaffold + health + `GET /config`
 - [x] **BE slice 2:** configuration CRUD + `productDependencies` on write
 - [x] **BE slice 3:** quote + checkout endpoints
-- [x] **BE slice 4:** `http.ts` + Vite proxy + `VITE_USE_API=true`
+- [x] **BE slice 4:** `http.ts` + `VITE_USE_API=true` + `VITE_API_URL`
 
 ---
 
@@ -180,8 +180,9 @@ JSON body on all errors: `{ "message": "..." }`
 ### Migration switch
 
 ```env
-VITE_USE_API=false   # local.ts (default while building FE)
-VITE_USE_API=true    # http.ts → Express via Vite proxy
+VITE_USE_API=false   # local.ts (default)
+VITE_USE_API=true    # http.ts → Express
+VITE_API_URL=http://localhost:3001/api/v1 # full API base when using http.ts
 ```
 
 ---
@@ -190,18 +191,19 @@ VITE_USE_API=true    # http.ts → Express via Vite proxy
 
 ### Client
 
-| File                                      | Role                                       |
-| ----------------------------------------- | ------------------------------------------ |
-| `client/src/api/client.ts`                | Single data door — see implementations     |
-| `client/src/api/implementations/local.ts` | In-memory + bundle.json (Phase 1)          |
-| `client/src/api/implementations/http.ts`  | fetch to Express via Vite proxy            |
-| `client/src/state/bundleReducer.ts`       | Selections + accordion state               |
-| `client/src/state/selectors.ts`           | Review lines, totals, step counts          |
-| `client/src/sync/optimisticSync.ts`       | Debounced PATCH queue                      |
-| `client/src/lib/pricing.ts`               | Client preview totals (mirror on server)   |
-| `client/src/lib/productDependencies.ts`   | Product `requires` graph + selection rules |
-| `client/src/lib/storage.ts`               | localStorage read/write                    |
-| `client/src/data/bundle.json`             | Catalog seed until server serves it        |
+| File                                      | Role                                        |
+| ----------------------------------------- | ------------------------------------------- |
+| `client/src/api/client.ts`                | Single data door — see implementations      |
+| `client/src/api/implementations/local.ts` | In-memory + bundle.json (Phase 1)           |
+| `client/src/api/implementations/http.ts`  | fetch to Express at `VITE_API_URL`          |
+| `client/src/state/bundleReducer.ts`       | Selections + accordion state                |
+| `client/src/state/selectors.ts`           | Review lines, totals, step counts           |
+| `client/src/sync/optimisticSync.ts`       | Debounced PATCH queue                       |
+| `client/src/api/httpClient.ts`            | fetch wrapper; base URL from `VITE_API_URL` |
+| `client/src/lib/pricing.ts`               | Client preview totals (mirror on server)    |
+| `client/src/lib/productDependencies.ts`   | Product `requires` graph + selection rules  |
+| `client/src/lib/storage.ts`               | localStorage read/write                     |
+| `client/src/data/bundle.json`             | Catalog seed until server serves it         |
 
 ### Server
 

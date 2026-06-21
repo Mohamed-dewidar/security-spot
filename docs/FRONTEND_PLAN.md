@@ -286,7 +286,7 @@ When `server/` exists:
 
 - Align types with `server/src/types/`
 - Implement `http.ts`
-- Vite proxy `/api/v1/*`
+- Implement `http.ts` with `VITE_API_URL=http://localhost:3001/api/v1`
 - Flip `VITE_USE_API=true`
 - Server-authoritative quote/checkout
 
